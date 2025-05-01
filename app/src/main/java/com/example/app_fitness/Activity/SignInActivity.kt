@@ -71,6 +71,7 @@ class SignInActivity : AppCompatActivity() {
                         // Lấy fullname và age từ response
                         val fullname = loginResponse.fullname
                         val age = loginResponse.age
+                        val userId = loginResponse.user_id
 
                         // Chuyển tới màn hình chính hoặc màn hình khác sau khi đăng nhập thành công
                         val intent = Intent(this@SignInActivity, WorkoutPlanActivity::class.java)
@@ -81,11 +82,12 @@ class SignInActivity : AppCompatActivity() {
                         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
                         with(sharedPref.edit()) {
                             putString("fullname", fullname)
+                            putInt("user_id", userId ?: -1)
                             putInt("age", age ?: -1)
                             apply()
                         }
 
-                        Log.d("Activity", "Fullname: $fullname, Age: $age")
+                        Log.d("Activity", "Fullname: $fullname, Age: $age,user_id:$userId")
                         startActivity(intent)
                     } else {
                         Toast.makeText(this@SignInActivity, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show()

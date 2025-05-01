@@ -6,6 +6,7 @@ import com.example.app_fitness.Entity.WorkoutLevel
 import com.example.app_fitness.Response.LoginResponse
 import com.example.app_fitness.Response.SignUpResponse
 import com.example.app_fitness.Response.UpdateUserResponse
+import com.example.app_fitness.Response.UserDataResponse
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -49,8 +50,10 @@ interface ApiService {
     fun getLevels(@Query("gender") gender: String): Call<List<WorkoutLevel>>
     @GET("get_excercise.php")
     fun getExercises(@Query("exercise_level_id") levelId: Int, @Query("gender") gender: String): Call<List<ExerciseRequest>>
-
-
+    @GET("get_user_data.php")
+    fun getUserData(
+        @Query("user_id") userId: Int
+    ): Call<UserDataResponse>
 
 
 }
