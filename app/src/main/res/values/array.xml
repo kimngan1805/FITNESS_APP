@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="workout_levels">
+        <item>Chưa tập luyện hoặc tập rất ít</item>
+        <item>Tập luyện nhẹ nhàng 1-2 lần/tuần</item>
+        <item>Tập luyện vừa phải 3-4 lần/tuần</item>
+        <item>Tập luyện thường xuyên 5+ lần/tuần</item>
+        <item>Vận động viên chuyên nghiệp</item>
+    </string-array>
+
+    <string name="select_workout_level">Chọn mức độ luyện tập</string>
+    <string-array name="workout_improvement">
+        <item>Giảm cân</item>
+        <item>Cardio</item>
+        <item>Siết cân</item>
+        <item>Tăng cơ</item>
+    </string-array>
+    <string name="select_workout_improvement">Chọn nơi cải thiện</string>
+
+    <!-- Gender options -->
+    <string-array name="gender_options">
+        <item>Nam</item>
+        <item>Nữ</item>
+    </string-array>
+</resources>

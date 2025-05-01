@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_workouts"
+        android:icon="@drawable/ic_workout"
+        android:title="Workouts" />
+
+    <item
+        android:id="@+id/menu_feed"
+        android:icon="@drawable/ic_feed"
+        android:title="Feed" />
+
+    <item
+        android:id="@+id/menu_messages"
+        android:icon="@drawable/ic_message"
+        android:title="Messages" />
+
+    <item
+        android:id="@+id/menu_handbook"
+        android:icon="@drawable/ic_handbook"
+        android:title="Handbook" />
+
+    <item
+        android:id="@+id/menu_more"
+        android:icon="@drawable/ic_more"
+        android:title="More" />
+
+</menu>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="WhiteButton" parent="Widget.AppCompat.Button">
+        <item name="android:backgroundTint">@android:color/white</item>
+        <item name="android:textColor">#333333</item> </style>
+
+    <style name="WhiteSignupButton" parent="Widget.AppCompat.Button">
+        <item name="android:backgroundTint">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item> </style>
+</resources>
