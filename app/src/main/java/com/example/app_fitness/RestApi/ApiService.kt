@@ -87,4 +87,11 @@ interface ApiService {
     fun getUserExercises(@Query("user_id") userId: Int): Call<List<AddedExercise>>
 
 
+    @GET("get_exercises_training.php") // Endpoint để lấy danh sách tất cả bài tập hoặc "Next training"
+    fun getExercises(
+        @Query("level_id") levelId: Int? = null,
+        @Query("gender") gender: String? = null
+        // Có thể thêm các tham số lọc khác nếu cần (ví dụ: is_next_training = 1)
+    ): Call<List<ExerciseRequest>>
+
 }

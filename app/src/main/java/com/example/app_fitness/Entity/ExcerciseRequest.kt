@@ -1,7 +1,11 @@
 package com.example.app_fitness.Entity
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 
 data class ExerciseRequest(
     val id: Int,
@@ -18,5 +22,7 @@ data class ExerciseRequest(
     @SerializedName("link")
     val video_url: String,
     @SerializedName("image_url")
-    val image_url: String
-)
+    val image_url: String,
+    val unlock_order: Int // Thêm unlock_order vào đây
+
+): Parcelable

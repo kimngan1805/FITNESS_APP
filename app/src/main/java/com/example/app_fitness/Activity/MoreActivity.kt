@@ -33,7 +33,7 @@ class MoreActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_workouts -> {
-                    startActivity(Intent(this, WorkoutLevelActivity::class.java))
+                    startActivity(Intent(this, DashboardActivity::class.java))
                     true
                 }
 
