@@ -67,6 +67,7 @@ class WorkoutPlanActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_workouts -> {
+                    startActivity(Intent(this, DashboardActivity::class.java))
                     // Đang ở trang này rồi, không làm gì
                     true
                 }

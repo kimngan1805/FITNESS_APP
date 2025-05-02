@@ -76,7 +76,7 @@ class ExerciseDetailActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_workouts -> {
-                    startActivity(Intent(this, WorkoutLevelActivity::class.java))
+                    startActivity(Intent(this, DashboardActivity::class.java))
                     true
                 }
                 R.id.menu_feed -> {
@@ -103,8 +103,11 @@ class ExerciseDetailActivity : AppCompatActivity() {
         val addButton = findViewById<Button>(R.id.addButton)
         addButton.setOnClickListener {
             val intent = Intent(this, DashboardActivity::class.java)
+            intent.putExtra("exercise_name", exerciseName)
+            intent.putExtra("exercise_image_url", imageUrl)
             startActivity(intent)
         }
+
 
 
 

@@ -46,7 +46,7 @@ class ExerciseActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.menu_workouts -> {
                     // Về lại WorkoutLevelActivity
-                    startActivity(Intent(this, WorkoutLevelActivity::class.java))
+                    startActivity(Intent(this, DashboardActivity::class.java))
                     true
                 }
                 R.id.menu_feed -> {
