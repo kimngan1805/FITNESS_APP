@@ -62,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="1/5/25"
+            android:text="11/05/2025"
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 

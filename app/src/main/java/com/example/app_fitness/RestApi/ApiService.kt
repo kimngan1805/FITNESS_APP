@@ -2,12 +2,14 @@ package com.example.app_fitness.RestApi
 
 import com.example.app_fitness.Entity.CategoryRequest
 import com.example.app_fitness.Entity.ExerciseRequest
+import com.example.app_fitness.Entity.UserData
 import com.example.app_fitness.Entity.WorkoutLevel
 import com.example.app_fitness.Response.LoginResponse
 import com.example.app_fitness.Response.SignUpResponse
 import com.example.app_fitness.Response.UpdateUserResponse
 import com.example.app_fitness.Response.UserDataResponse
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -54,6 +56,21 @@ interface ApiService {
     fun getUserData(
         @Query("user_id") userId: Int
     ): Call<UserDataResponse>
+    @FormUrlEncoded
+    @POST("measurement_api.php") // thay bằng tên file PHP xử lý
+    fun saveMeasurement(
+        @Field("user_id") userId: Int,
+        @Field("date") date: String,
+        @Field("result") result: String,
+        @Field("weight") weight: Float,
+        @Field("height") height: Int,
+        @Field("body_fat") bodyFat: Int,
+        @Field("neck") neck: Float,
+        @Field("shoulder") shoulder: Float,
+        @Field("chest") chest: Float,
+        @Field("waist") waist: Float
+    ): Call<UserDataResponse>
+
 
 
 }
