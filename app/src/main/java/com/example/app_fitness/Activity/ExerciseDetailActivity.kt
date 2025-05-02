@@ -2,6 +2,7 @@ package com.example.app_fitness.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -21,10 +22,13 @@ class ExerciseDetailActivity : AppCompatActivity() {
     private lateinit var workoutNote: TextView
     private lateinit var workoutDay: TextView
     private lateinit var backButton: ImageButton
+    private var currentExerciseId: Int = -1 // Biến để lưu ID bài tập
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_workout_detail)
+        val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
+        val userId = sharedPref.getInt("user_id", -1)
 
         // Ánh xạ view
         workoutImage = findViewById(R.id.workoutImage)
@@ -58,6 +62,7 @@ class ExerciseDetailActivity : AppCompatActivity() {
                         workoutDescription.text = "Mô tả: ${it.description}"
                         workoutNote.text = "Ghi chú: ${it.note}"
                         workoutDay.text = "Ngày: ${it.day}"
+                        currentExerciseId = it.id // Lấy ID bài tập
                     }
                 }
             }
@@ -102,14 +107,31 @@ class ExerciseDetailActivity : AppCompatActivity() {
 
         val addButton = findViewById<Button>(R.id.addButton)
         addButton.setOnClickListener {
-            val intent = Intent(this, DashboardActivity::class.java)
-            intent.putExtra("exercise_name", exerciseName)
-            intent.putExtra("exercise_image_url", imageUrl)
-            startActivity(intent)
+            if (currentExerciseId != -1 && userId != -1) {
+                Log.d("AddExercise", "Adding exercise with ID: $currentExerciseId and User ID: $userId") // Thêm dòng log này
+                RetrofitClient.instance.addUserExercise(currentExerciseId, userId).enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        Log.d("AddExercise", "Response code: ${response.code()}") // Log mã trạng thái HTTP
+                        if (response.isSuccessful) {
+                            Toast.makeText(this@ExerciseDetailActivity, "Đã thêm bài tập", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@ExerciseDetailActivity, DashboardActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(this@ExerciseDetailActivity, "Lỗi khi thêm bài tập. Mã: ${response.code()}", Toast.LENGTH_SHORT).show()
+                            Log.e("AddExercise", "Error adding exercise. Code: ${response.code()}, Body: ${response.errorBody()?.string()}") // Log lỗi chi tiết
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Toast.makeText(this@ExerciseDetailActivity, "Lỗi kết nối: ${t.message}", Toast.LENGTH_SHORT).show()
+                        Log.e("AddExercise", "Connection error: ${t.message}") // Log lỗi kết nối
+                    }
+                })
+            } else {
+                Toast.makeText(this@ExerciseDetailActivity, "Không thể thêm bài tập. Thiếu thông tin.", Toast.LENGTH_SHORT).show()
+                Log.w("AddExercise", "Missing exercise ID or user ID.") // Log cảnh báo thiếu ID
+            }
         }
-
-
-
-
     }
 }

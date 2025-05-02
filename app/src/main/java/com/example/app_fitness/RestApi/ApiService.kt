@@ -1,5 +1,6 @@
 package com.example.app_fitness.RestApi
 
+import com.example.app_fitness.Entity.AddedExercise
 import com.example.app_fitness.Entity.CategoryRequest
 import com.example.app_fitness.Entity.ExerciseRequest
 import com.example.app_fitness.Entity.UserData
@@ -71,6 +72,19 @@ interface ApiService {
         @Field("waist") waist: Float
     ): Call<UserDataResponse>
 
+
+    @FormUrlEncoded
+    @POST("add_excercise_user.php") // Tên file PHP trên server để thêm bài tập
+    fun addUserExercise(
+        @Field("exercise_id") exerciseId: Int,
+        @Field("user_id") userId: Int
+    ): Call<Void> // Hoặc một Response cụ thể nếu server trả về dữ liệu sau khi thêm
+
+    @GET("get_exercise_by_id.php?action=get_exercise_by_id")
+    fun getExerciseById(@Query("exercise_id") exerciseId: Int): Call<ExerciseRequest>
+
+    @GET("get_exercise_by_id.php?action=get_user_exercises")
+    fun getUserExercises(@Query("user_id") userId: Int): Call<List<AddedExercise>>
 
 
 }
