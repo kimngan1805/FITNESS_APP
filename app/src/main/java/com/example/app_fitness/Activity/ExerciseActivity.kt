@@ -50,7 +50,7 @@ class ExerciseActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_feed -> {
-                    startActivity(Intent(this, WorkoutLevelActivity::class.java))
+                    startActivity(Intent(this, FeedActivity::class.java))
                     true
                 }
                 R.id.menu_messages -> {

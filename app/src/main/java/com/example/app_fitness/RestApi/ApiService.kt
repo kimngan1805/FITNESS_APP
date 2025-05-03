@@ -2,7 +2,9 @@ package com.example.app_fitness.RestApi
 
 import com.example.app_fitness.Entity.AddedExercise
 import com.example.app_fitness.Entity.CategoryRequest
+import com.example.app_fitness.Entity.Comment
 import com.example.app_fitness.Entity.ExerciseRequest
+import com.example.app_fitness.Entity.FeedItem
 import com.example.app_fitness.Entity.UserData
 import com.example.app_fitness.Entity.WorkoutLevel
 import com.example.app_fitness.Response.LoginResponse
@@ -93,5 +95,10 @@ interface ApiService {
         @Query("gender") gender: String? = null
         // Có thể thêm các tham số lọc khác nếu cần (ví dụ: is_next_training = 1)
     ): Call<List<ExerciseRequest>>
+
+    @GET("get_feeds.php") // Đảm bảo đường dẫn này đúng với API của bạn
+    fun getFeeds(): Call<List<FeedItem>>
+    @GET("get_comments.php")
+    fun getComments(@Query("post_id") postId: Int): Call<List<Comment>>
 
 }
