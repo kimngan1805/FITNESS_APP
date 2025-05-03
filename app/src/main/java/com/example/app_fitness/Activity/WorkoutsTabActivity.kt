@@ -2,26 +2,23 @@ package com.example.app_fitness.Activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.app_fitness.Adapter.NextTrainingAdapter
 import com.example.app_fitness.Entity.AddedExercise
 import com.example.app_fitness.Entity.ExerciseRequest
-import com.example.app_fitness.Adapter.NextTrainingAdapter
 import com.example.app_fitness.R
 import com.example.app_fitness.RestApi.RetrofitClient
 import com.example.app_fitness.databinding.ActivityDashboardBinding
-import com.google.android.material.navigation.NavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DashboardActivity : AppCompatActivity() {
+class WorkoutsTabActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardBinding
     private lateinit var nextTrainingAdapter: NextTrainingAdapter
     private val nextTrainingExercises = mutableListOf<ExerciseRequest>()
@@ -29,10 +26,18 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding.root) // Sử dụng layout của DashboardActivity
 
         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
         val userId = sharedPref.getInt("user_id", -1)
+
+        // Ẩn nút menu (vì đây là trang Workouts chuyên biệt)
+        binding.menuButton.visibility = View.GONE
+
+        // Thay đổi text của back button (nếu cần) hoặc giữ nguyên chức năng back
+        binding.backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         // Cấu hình RecyclerView cho "Next training"
         binding.nextTrainingRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -52,46 +57,8 @@ class DashboardActivity : AppCompatActivity() {
             Toast.makeText(this, "Vui lòng đăng nhập để xem bài tập", Toast.LENGTH_SHORT).show()
         }
 
-        // Thêm sự kiện click cho nút back
-        binding.backButton.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
 
-        // Xử lý nút menu ở góc trên bên phải
-        binding.menuButton.setOnClickListener { view ->
-            val popupMenu = PopupMenu(this, view)
-            popupMenu.menuInflater.inflate(R.menu.drawer_menu, popupMenu.menu)
 
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.nav_workouts -> {
-                        // Tạo Intent để chuyển sang WorkoutsTabActivity
-                        val intent = Intent(this@DashboardActivity, WorkoutsTabActivity::class.java)
-                        startActivity(intent)
-                        true
-                    }
-                    R.id.nav_diet -> {
-                        Toast.makeText(this@DashboardActivity, "Diet selected", Toast.LENGTH_SHORT).show()
-                        // Xử lý khi chọn "Diet" (nếu có Activity tương ứng)
-                        true
-                    }
-                    R.id.nav_sports_nutrition -> {
-                        Toast.makeText(this@DashboardActivity, "Sports nutri... selected", Toast.LENGTH_SHORT).show()
-                        // Xử lý khi chọn "Sports nutri..." (nếu có Activity tương ứng)
-                        true
-                    }
-
-                    R.id.add_workout -> {
-                        // Tạo Intent để chuyển sang WorkoutsTabActivity
-                        val intent = Intent(this@DashboardActivity, WorkoutPlanActivity::class.java)
-                        startActivity(intent)
-                        true
-                    }
-                    else -> false
-                }
-            }
-            popupMenu.show()
-        }
     }
 
     override fun onResume() {
@@ -116,12 +83,12 @@ class DashboardActivity : AppCompatActivity() {
                         binding.workoutImageHeader.setImageResource(R.drawable.activity_hinh)
                     }
                 } else {
-                    Toast.makeText(this@DashboardActivity, "Lỗi khi tải danh sách bài tập đã thêm", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@WorkoutsTabActivity, "Lỗi khi tải danh sách bài tập đã thêm", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<List<AddedExercise>>, t: Throwable) {
-                Toast.makeText(this@DashboardActivity, "Lỗi kết nối khi tải danh sách bài tập", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@WorkoutsTabActivity, "Lỗi kết nối khi tải danh sách bài tập", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -136,17 +103,17 @@ class DashboardActivity : AppCompatActivity() {
                     val exercise = response.body()
                     exercise?.let {
                         binding.exerciseNameTextView.text = it.exercise_name
-                        Glide.with(this@DashboardActivity)
+                        Glide.with(this@WorkoutsTabActivity)
                             .load(it.image_url)
                             .into(binding.workoutImageHeader)
                     }
                 } else {
-                    Toast.makeText(this@DashboardActivity, "Lỗi tải chi tiết bài tập", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@WorkoutsTabActivity, "Lỗi tải chi tiết bài tập", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<ExerciseRequest>, t: Throwable) {
-                Toast.makeText(this@DashboardActivity, "Lỗi kết nối khi tải chi tiết", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@WorkoutsTabActivity, "Lỗi kết nối khi tải chi tiết", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -166,12 +133,12 @@ class DashboardActivity : AppCompatActivity() {
                     val completedExercises = getCompletedExerciseIds()
                     nextTrainingAdapter.updateCompletedExercises(completedExercises)
                 } else {
-                    Toast.makeText(this@DashboardActivity, "Lỗi tải bài tập tiếp theo", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@WorkoutsTabActivity, "Lỗi tải bài tập tiếp theo", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<List<ExerciseRequest>>, t: Throwable) {
-                Toast.makeText(this@DashboardActivity, "Lỗi kết nối khi tải bài tập tiếp theo", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@WorkoutsTabActivity, "Lỗi kết nối khi tải bài tập tiếp theo", Toast.LENGTH_SHORT).show()
             }
         })
     }

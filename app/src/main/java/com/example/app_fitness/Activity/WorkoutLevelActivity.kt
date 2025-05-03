@@ -57,7 +57,7 @@ class WorkoutLevelActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_handbook -> {
-                    startActivity(Intent(this, WorkoutPlanActivity::class.java))
+                    startActivity(Intent(this, HandbookActivity::class.java))
                     true
                 }
                 R.id.menu_more -> {

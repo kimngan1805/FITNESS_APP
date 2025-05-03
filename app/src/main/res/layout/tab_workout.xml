@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F5F5">
@@ -14,12 +15,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/backButtonWorkouts"
+                android:id="@+id/backButton"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:src="@drawable/ic_arrow"
@@ -36,9 +37,10 @@
                 android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/menuButton"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/ic_menu"
+                android:src="@drawable/ic_menu1"
                 app:tint="#000000" />
         </LinearLayout>
 
@@ -54,7 +56,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/tab_dashboard_workouts"
+                    android:id="@+id/tab_dashboard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -63,11 +65,11 @@
                     android:paddingVertical="8dp"
                     android:text="Dashboard"
                     android:textAllCaps="false"
-                    android:textColor="#757575"
+                    android:textColor="#00BCD4"
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/tab_workouts_workouts"
+                    android:id="@+id/tab_workouts"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -76,11 +78,11 @@
                     android:paddingVertical="8dp"
                     android:text="Workouts"
                     android:textAllCaps="false"
-                    android:textColor="#00BCD4"
+                    android:textColor="#757575"
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/tab_diet_workouts"
+                    android:id="@+id/tab_diet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -93,7 +95,7 @@
                     android:textSize="14sp" />
 
                 <Button
-                    android:id="@+id/tab_sports_nutrition_workouts"
+                    android:id="@+id/tab_sports_nutrition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_upin"
@@ -123,7 +125,7 @@
                     android:layout_height="180dp">
 
                     <ImageView
-                        android:id="@+id/workoutImageHeaderWorkouts"
+                        android:id="@+id/workoutImageHeader"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:alpha="0.7"
@@ -131,14 +133,14 @@
                         android:src="@drawable/activity_hinh" />
 
                     <TextView
-                        android:id="@+id/exerciseNameTextViewWorkouts"
+                        android:id="@+id/exerciseNameTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentBottom="true"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="16dp"
-                        android:text="SCULPTED BODY"
+                        android:text="WEIGHT LOSS"
                         android:textColor="#000000"
                         android:textSize="24sp"
                         android:textStyle="bold" />
@@ -176,31 +178,68 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginBottom="12dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Next training"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-
-        </LinearLayout>
+            android:layout_marginBottom="12dp"
+            android:text="Next training"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/nextTrainingRecyclerViewWorkouts"
+            android:id="@+id/nextTrainingRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp" />
 
 
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Workout schedule"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="More"
+                    android:textColor="#00BCD4"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_arrow"
+                    app:tint="#00BCD4" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
     </LinearLayout>
+
+
+
 </ScrollView>
