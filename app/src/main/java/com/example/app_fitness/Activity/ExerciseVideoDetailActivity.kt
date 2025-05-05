@@ -22,7 +22,8 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
     private lateinit var exerciseTitleTextView: TextView
     private lateinit var doneButton: Button
     private var currentExercise: ExerciseRequest? = null
-    private var userId: Int = -1 // Store user ID
+    private var userId: Int = -1
+    private var completedExerciseIds: List<Int> = emptyList() // Danh sách ID bài tập đã hoàn thành
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,6 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
 
         currentExercise = intent.getParcelableExtra<ExerciseRequest>("exercise")
 
-        // Get user ID from shared preferences
         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
         userId = sharedPref.getInt("user_id", -1)
 
@@ -55,10 +55,17 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
             })
         }
 
+        // Lấy danh sách bài tập đã hoàn thành
+        if (userId != -1) {
+            getCompletedExercises()
+        } else {
+            Toast.makeText(this, "Bạn cần đăng nhập để xem tiến trình", Toast.LENGTH_SHORT).show()
+        }
+
         doneButton.setOnClickListener {
             currentExercise?.let { exercise ->
                 if (userId != -1) {
-                    markExerciseAsCompleted(userId, exercise.id) // Call the function with individual parameters
+                    markExerciseAsCompleted(userId, exercise.id)
                 } else {
                     Toast.makeText(this, "Bạn cần đăng nhập để lưu tiến trình", Toast.LENGTH_SHORT).show()
                 }
@@ -74,14 +81,15 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
     }
 
     private fun markExerciseAsCompleted(userId: Int, exerciseId: Int) {
-        // Remove the HashMap creation
-        RetrofitClient.instance.markExerciseCompleted(userId, exerciseId).enqueue(object : Callback<Void> { // Pass userId and exerciseId directly
+        RetrofitClient.instance.markExerciseCompleted(userId, exerciseId).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@ExerciseVideoDetailActivity, "Đã đánh dấu hoàn thành!", Toast.LENGTH_SHORT).show()
+                    // Sau khi đánh dấu hoàn thành, cập nhật lại danh sách bài tập đã hoàn thành
+                    getCompletedExercises()
                     finish()
                 } else {
-                    Toast.makeText(this@ExerciseVideoDetailActivity, "Lỗi khi đánh dấu hoàn thành.  Response Code: ${response.code()}", Toast.LENGTH_SHORT).show() //Added response code
+                    Toast.makeText(this@ExerciseVideoDetailActivity, "Lỗi khi đánh dấu hoàn thành.  Response Code: ${response.code()}", Toast.LENGTH_SHORT).show()
                     Log.e("markExerciseCompleted", "Error: ${response.errorBody()?.string()}")
                 }
             }
@@ -93,9 +101,39 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
         })
     }
 
+    private fun getCompletedExercises() {
+        RetrofitClient.instance.getCompletedExercises(userId).enqueue(object : Callback<List<Int>> {
+            override fun onResponse(call: Call<List<Int>>, response: Response<List<Int>>) {
+                if (response.isSuccessful) {
+                    completedExerciseIds = response.body() ?: emptyList()
+                    updateUI() // Cập nhật giao diện sau khi lấy dữ liệu
+                } else {
+                    Toast.makeText(this@ExerciseVideoDetailActivity, "Lỗi khi lấy danh sách bài tập đã hoàn thành", Toast.LENGTH_SHORT).show()
+                    Log.e("getCompletedExercises", "Error: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Int>>, t: Throwable) {
+                Log.e("getCompletedExercises", "Error: ${t.message}")
+                Toast.makeText(this@ExerciseVideoDetailActivity, "Lỗi kết nối: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun updateUI() {
+        currentExercise?.let { exercise ->
+            if (completedExerciseIds.contains(exercise.id)) {
+                doneButton.isEnabled = false // Vô hiệu hóa nút "Done"
+                doneButton.text = "Đã hoàn thành" // Thay đổi text
+            } else {
+                doneButton.isEnabled = true
+                doneButton.text = "Done"
+            }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         youtubePlayerView?.release()
     }
 }
-

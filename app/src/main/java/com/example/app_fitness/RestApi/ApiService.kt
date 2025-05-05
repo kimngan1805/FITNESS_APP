@@ -123,4 +123,11 @@ interface ApiService {
         @Field("exercise_id") exerciseId: Int
     ): Call<Void>
 
+    @GET("get_completed_exercises.php") // Thêm endpoint mới
+    fun getCompletedExercises(@Query("user_id") userId: Int): Call<List<Int>>
+
+
+    @GET("get_next_training_exercise.php")
+    fun getNextTrainingExercise(@Query("user_id") userId: Int): Call<ExerciseRequest?>
+
 }
