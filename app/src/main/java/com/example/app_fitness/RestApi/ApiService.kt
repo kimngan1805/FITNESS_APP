@@ -5,6 +5,7 @@ import com.example.app_fitness.Entity.CategoryRequest
 import com.example.app_fitness.Entity.Comment
 import com.example.app_fitness.Entity.ExerciseRequest
 import com.example.app_fitness.Entity.FeedItem
+import com.example.app_fitness.Entity.MarkCompletedRequest
 import com.example.app_fitness.Entity.UserData
 import com.example.app_fitness.Entity.WorkoutLevel
 import com.example.app_fitness.Response.CommentCountResponse
@@ -93,13 +94,12 @@ interface ApiService {
     @GET("check_user_exercises.php")
     fun checkUserHasExercises(@Query("user_id") userId: Int): Call<HasExercisesResponse>
 
-    @GET("get_exercises_training.php") // Endpoint để lấy danh sách tất cả bài tập hoặc "Next training"
+    @GET("get_exercises_training.php")
     fun getExercises(
         @Query("level_id") levelId: Int? = null,
-        @Query("gender") gender: String? = null
-        // Có thể thêm các tham số lọc khác nếu cần (ví dụ: is_next_training = 1)
+        @Query("gender") gender: String? = null,
+        @Query("user_id") userId: Int? = null // Thêm user_id
     ): Call<List<ExerciseRequest>>
-
     @GET("get_feeds.php") // Đảm bảo đường dẫn này đúng với API của bạn
     fun getFeeds(): Call<List<FeedItem>>
     @GET("get_comments.php")
@@ -115,5 +115,12 @@ interface ApiService {
 
     @GET("get_comment_count.php/{post_id}")
     fun getCommentCount(@Query("post_id") postId: Int): Call<CommentCountResponse>
+
+    @FormUrlEncoded
+    @POST("mark_exercise_completed.php")
+    fun markExerciseCompleted(
+        @Field("user_id") userId: Int,
+        @Field("exercise_id") exerciseId: Int
+    ): Call<Void>
 
 }

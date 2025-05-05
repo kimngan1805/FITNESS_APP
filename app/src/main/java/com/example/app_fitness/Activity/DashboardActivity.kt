@@ -21,11 +21,12 @@ import com.google.android.material.navigation.NavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 class DashboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDashboardBinding
     private lateinit var nextTrainingAdapter: NextTrainingAdapter
-    private val nextTrainingExercises = mutableListOf<ExerciseRequest>()
+    private val nextTrainingExercises = mutableListOf<ExerciseRequest>() // SỬA CHỖ NÀY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -191,29 +192,50 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun loadNextTrainingExercises() {
-        RetrofitClient.instance.getExercises(null, null).enqueue(object : Callback<List<ExerciseRequest>> {
-            override fun onResponse(
-                call: Call<List<ExerciseRequest>>,
-                response: Response<List<ExerciseRequest>>
-            ) {
-                if (response.isSuccessful) {
-                    val exercises = response.body() ?: emptyList()
-                    val sortedExercises = exercises.sortedBy { it.unlock_order }
-                    nextTrainingExercises.clear()
-                    nextTrainingExercises.addAll(sortedExercises)
-                    nextTrainingAdapter.notifyDataSetChanged()
-                    val completedExercises = getCompletedExerciseIds()
-                    nextTrainingAdapter.updateCompletedExercises(completedExercises)
-                } else {
-                    Toast.makeText(this@DashboardActivity, "Lỗi tải bài tập tiếp theo", Toast.LENGTH_SHORT).show()
-                }
-            }
+        val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
+        val userLevel = sharedPref.getString("workout_level", null)
+        val userGender = sharedPref.getString("gender", null)
+        val userId = sharedPref.getInt("user_id", -1)
 
-            override fun onFailure(call: Call<List<ExerciseRequest>>, t: Throwable) {
-                Toast.makeText(this@DashboardActivity, "Lỗi kết nối khi tải bài tập tiếp theo", Toast.LENGTH_SHORT).show()
-            }
-        })
+        val levelId = getLevelIdFromLevelString(userLevel) // Lấy levelId từ workout_level
+
+        if (userId != -1) {
+            RetrofitClient.instance.getExercises(
+                levelId = levelId, // Truyền levelId
+                gender = userGender,
+                userId = userId
+            ).enqueue(object : Callback<List<ExerciseRequest>> { // SỬA CHỖ NÀY
+                override fun onResponse(
+                    call: Call<List<ExerciseRequest>>,
+                    response: Response<List<ExerciseRequest>>
+                ) {
+                    if (response.isSuccessful) {
+                        val exercisesWithLock = response.body() ?: emptyList()
+                        nextTrainingExercises.clear()
+                        // CẦN SỬA CHỖ NÀY NỮA: nextTrainingExercises đang là MutableList<ExerciseRequest>
+                        // MÁ CẦN CHUYỂN NÓ THÀNH MutableList<ExerciseResponseWithLock>
+                        nextTrainingExercises.addAll(exercisesWithLock.sortedBy { it.unlock_order })
+                        nextTrainingAdapter.notifyDataSetChanged()
+                    } else {
+                        Toast.makeText(this@DashboardActivity, "Lỗi tải bài tập tiếp theo", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<List<ExerciseRequest>>, t: Throwable) { // SỬA CHỖ NÀY
+                    Toast.makeText(this@DashboardActivity, "Lỗi kết nối khi tải bài tập tiếp theo", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
+    private fun getLevelIdFromLevelString(level: String?): Int? {
+        return when (level?.toLowerCase(Locale.ROOT)) {
+            "beginner" -> 1
+            "intermediate" -> 2
+            "advanced" -> 3
+            else -> null // Hoặc giá trị mặc định khác nếu cần
+        }
+    }
+
 
     private fun getCompletedExerciseIds(): Set<Int> {
         val sharedPref = getSharedPreferences("CompletedExercises", MODE_PRIVATE)
