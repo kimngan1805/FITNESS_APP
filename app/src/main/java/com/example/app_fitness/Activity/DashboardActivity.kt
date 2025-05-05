@@ -14,6 +14,7 @@ import com.example.app_fitness.Entity.AddedExercise
 import com.example.app_fitness.Entity.ExerciseRequest
 import com.example.app_fitness.Adapter.NextTrainingAdapter
 import com.example.app_fitness.R
+import com.example.app_fitness.Response.HasExercisesResponse
 import com.example.app_fitness.RestApi.RetrofitClient
 import com.example.app_fitness.databinding.ActivityDashboardBinding
 import com.google.android.material.navigation.NavigationView
@@ -46,6 +47,8 @@ class DashboardActivity : AppCompatActivity() {
         if (userId != -1) {
             loadLatestAddedExercise(userId)
             loadNextTrainingExercises()
+            checkAndLoadNextTraining(userId) // Gọi hàm kiểm tra và tải next training
+
         } else {
             binding.exerciseNameTextView.text = "Chưa đăng nhập"
             binding.workoutImageHeader.setImageResource(R.drawable.activity_hinh)
@@ -100,6 +103,42 @@ class DashboardActivity : AppCompatActivity() {
         nextTrainingAdapter.updateCompletedExercises(completedExercises)
     }
 
+    private fun checkAndLoadNextTraining(userId: Int) {
+        RetrofitClient.instance.checkUserHasExercises(userId).enqueue(object : Callback<HasExercisesResponse> {
+            override fun onResponse(
+                call: Call<HasExercisesResponse>,
+                response: Response<HasExercisesResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val hasExercises = response.body()?.has_exercises ?: false
+                    if (hasExercises) {
+                        binding.nextTrainingTitleTextView.visibility = View.VISIBLE
+                        binding.nextTrainingRecyclerView.visibility = View.VISIBLE
+                        loadNextTrainingExercises() // Chỉ tải khi có bài tập đã thêm
+                    } else {
+                        binding.nextTrainingTitleTextView.visibility = View.GONE
+                        binding.nextTrainingRecyclerView.visibility = View.GONE
+                        // Hiển thị thông báo nếu muốn:
+                        // binding.textViewNoNextTraining.visibility = View.VISIBLE
+                    }
+                } else {
+                    Toast.makeText(this@DashboardActivity, "Lỗi khi kiểm tra bài tập đã thêm", Toast.LENGTH_SHORT).show()
+                    // Xử lý lỗi: Có thể vẫn hiển thị phần "Next training" và tải mặc định nếu cần
+                    binding.nextTrainingTitleTextView.visibility = View.VISIBLE
+                    binding.nextTrainingRecyclerView.visibility = View.VISIBLE
+                    loadNextTrainingExercises()
+                }
+            }
+
+            override fun onFailure(call: Call<HasExercisesResponse>, t: Throwable) {
+                Toast.makeText(this@DashboardActivity, "Lỗi kết nối khi kiểm tra bài tập đã thêm", Toast.LENGTH_SHORT).show()
+                // Xử lý lỗi kết nối: Có thể vẫn hiển thị phần "Next training" và tải mặc định nếu cần
+                binding.nextTrainingTitleTextView.visibility = View.VISIBLE
+                binding.nextTrainingRecyclerView.visibility = View.VISIBLE
+                loadNextTrainingExercises()
+            }
+        })
+    }
     private fun loadLatestAddedExercise(userId: Int) {
         RetrofitClient.instance.getUserExercises(userId).enqueue(object : Callback<List<AddedExercise>> {
             override fun onResponse(

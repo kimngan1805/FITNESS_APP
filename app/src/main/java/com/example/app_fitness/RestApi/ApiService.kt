@@ -7,6 +7,8 @@ import com.example.app_fitness.Entity.ExerciseRequest
 import com.example.app_fitness.Entity.FeedItem
 import com.example.app_fitness.Entity.UserData
 import com.example.app_fitness.Entity.WorkoutLevel
+import com.example.app_fitness.Response.CommentCountResponse
+import com.example.app_fitness.Response.HasExercisesResponse
 import com.example.app_fitness.Response.LoginResponse
 import com.example.app_fitness.Response.SignUpResponse
 import com.example.app_fitness.Response.UpdateUserResponse
@@ -17,6 +19,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -87,7 +90,8 @@ interface ApiService {
 
     @GET("get_exercise_by_id.php?action=get_user_exercises")
     fun getUserExercises(@Query("user_id") userId: Int): Call<List<AddedExercise>>
-
+    @GET("check_user_exercises.php")
+    fun checkUserHasExercises(@Query("user_id") userId: Int): Call<HasExercisesResponse>
 
     @GET("get_exercises_training.php") // Endpoint để lấy danh sách tất cả bài tập hoặc "Next training"
     fun getExercises(
@@ -100,5 +104,16 @@ interface ApiService {
     fun getFeeds(): Call<List<FeedItem>>
     @GET("get_comments.php")
     fun getComments(@Query("post_id") postId: Int): Call<List<Comment>>
+    @FormUrlEncoded
+    @POST("add_comment.php") // Endpoint để thêm bình luận
+    fun addComment(
+        @Field("post_id") postId: Int,
+        @Field("user_id") userId: Int,
+        @Field("comment_text") commentText: String,
+        @Field("created_at") createdAt: String
+    ): Call<Void>// Hoặc Response bạn mong đợi
+
+    @GET("get_comment_count.php/{post_id}")
+    fun getCommentCount(@Query("post_id") postId: Int): Call<CommentCountResponse>
 
 }

@@ -7,9 +7,6 @@ import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.app_fitness.Activity.DashboardActivity
-import com.example.app_fitness.Activity.HandbookActivity
-import com.example.app_fitness.Activity.MoreActivity
 import com.example.app_fitness.Adapter.FeedAdapter
 import com.example.app_fitness.Entity.FeedItem
 import com.example.app_fitness.MainActivity
@@ -30,11 +27,12 @@ class FeedActivity : AppCompatActivity() {
     private val feedItems = mutableListOf<FeedItem>()
     private lateinit var apiService: ApiService
     private var isAdmin = false // Biến để kiểm tra quyền admin
+    private var currentUsername: String? = null // Thêm biến nà
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFeedBinding.inflate(layoutInflater)
-        binding.feedRecyclerView.adapter = FeedAdapter(feedItems)
+        binding.feedRecyclerView.adapter = FeedAdapter(feedItems, currentUsername)
         setContentView(binding.root)
 
         // Khởi tạo ApiService thông qua RetrofitClient
@@ -42,7 +40,9 @@ class FeedActivity : AppCompatActivity() {
 
         // Kiểm tra vai trò người dùng (ví dụ, từ SharedPreferences)
         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
-        val userRole = sharedPref.getString("role", "user") // "user" là giá trị mặc định nếu không tìm thấy
+        val userRole = sharedPref.getString("role", "user")
+        currentUsername = sharedPref.getString("fullname", "Your Name") // Lấy fullname
+            // "user" là giá trị mặc định nếu không tìm thấy
         isAdmin = userRole == "admin"
 
         // Hiển thị/ẩn nút đăng bài dựa trên vai trò
@@ -57,7 +57,7 @@ class FeedActivity : AppCompatActivity() {
 
         // Thiết lập RecyclerView
         binding.feedRecyclerView.layoutManager = LinearLayoutManager(this)
-        feedAdapter = FeedAdapter(feedItems)
+        feedAdapter = FeedAdapter(feedItems, currentUsername)
         binding.feedRecyclerView.adapter = feedAdapter
 
         // Load dữ liệu từ API

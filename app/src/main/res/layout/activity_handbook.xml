@@ -151,7 +151,7 @@
                 android:background="@drawable/handbook_item_rounded">
 
                 <ImageView
-                    android:background="@drawable/encyclopedia_image"
+                    android:background="@drawable/pharmacology_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
