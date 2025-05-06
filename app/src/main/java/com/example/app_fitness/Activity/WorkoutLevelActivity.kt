@@ -53,7 +53,7 @@ class WorkoutLevelActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_messages -> {
-                    startActivity(Intent(this, WorkoutPlanActivity::class.java))
+                    startActivity(Intent(this, MessageActivity::class.java))
                     true
                 }
                 R.id.menu_handbook -> {

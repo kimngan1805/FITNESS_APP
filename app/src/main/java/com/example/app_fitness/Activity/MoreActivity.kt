@@ -43,7 +43,7 @@ class MoreActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_messages -> {
-                    startActivity(Intent(this, WorkoutLevelActivity::class.java))
+                    startActivity(Intent(this, MessageActivity::class.java))
                     true
                 }
 

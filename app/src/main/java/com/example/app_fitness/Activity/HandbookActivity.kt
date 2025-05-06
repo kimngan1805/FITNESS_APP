@@ -50,7 +50,7 @@ class HandbookActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_messages -> {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, MessageActivity::class.java))
                     true
                 }
                 R.id.menu_handbook -> {

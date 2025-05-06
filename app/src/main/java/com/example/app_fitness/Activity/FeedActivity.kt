@@ -114,7 +114,7 @@ class FeedActivity : AppCompatActivity() {
                 return true
             }
             R.id.menu_messages -> {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, MessageActivity::class.java))
                 return true
             }
             R.id.menu_handbook -> {
