@@ -29,6 +29,7 @@ class MessageActivity : AppCompatActivity() { // Đổi tên class thành Messag
         val addMessageButton: Button = binding.addMessageButton
         val backButton: ImageView = binding.backButton // Khởi tạo nút back
 
+
         // Thiết lập các thuộc tính (màu chữ, text, v.v.)
         messagesTitle.setTextColor(resources.getColor(R.color.black, theme))
         emptyMessagesText.setTextColor(resources.getColor(R.color.black, theme))
@@ -40,7 +41,9 @@ class MessageActivity : AppCompatActivity() { // Đổi tên class thành Messag
 
         // Xử lý sự kiện click cho button
         addMessageButton.setOnClickListener {
-            Toast.makeText(this, "Chuyển đến màn hình soạn tin nhắn...", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Chuyển đến màn hình Community...", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, CommunityActivity::class.java) // Tạo Intent để chuyển sang CommunityActivity
+            startActivity(intent) // Bắt đầu CommunityActivity
         }
 
         // Xử lý sự kiện click cho nút back
