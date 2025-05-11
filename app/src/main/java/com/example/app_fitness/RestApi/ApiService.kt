@@ -130,4 +130,12 @@ interface ApiService {
     @GET("get_next_training_exercises.php")
     fun getNextTrainingExercise(@Query("user_id") userId: Int): Call<ExerciseRequest?>
 
+    @FormUrlEncoded
+    @POST("save_calorie_entry.php") // Endpoint PHP để lưu một mục calo
+    fun saveCalorieEntry(
+        @Field("user_id") user_id: Int,
+        @Field("food_name") food_name: String,
+        @Field("quantity") quantity: Int,
+    ): Call<Void>
+
 }

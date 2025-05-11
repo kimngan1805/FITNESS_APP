@@ -70,6 +70,11 @@ class MoreActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.root.findViewById<LinearLayout>(R.id.rowMyAnalysis).setOnClickListener {
+            val intent = Intent(this, AnalysisActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 

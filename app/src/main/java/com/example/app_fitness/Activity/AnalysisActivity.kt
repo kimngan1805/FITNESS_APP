@@ -6,10 +6,17 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_fitness.Adapter.FoodListAdapter
 import com.example.app_fitness.R
+import com.example.app_fitness.RestApi.RetrofitClient
+import com.example.app_fitness.ViewModel.FoodEntryViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.Date
 
 class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickListener {
 
@@ -19,6 +26,9 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
     private lateinit var addButton: Button
     private lateinit var foodNameInput: EditText
     private lateinit var quantityInput: EditText
+    private lateinit var calculateCaloriesButton: Button
+    private var userId: Int = -1
+    private lateinit var foodEntryViewModel: FoodEntryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +38,38 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
         addButton = findViewById(R.id.add_food_button)
         foodNameInput = findViewById(R.id.food_name_input)
         quantityInput = findViewById(R.id.quantity_input)
+        calculateCaloriesButton = findViewById(R.id.calculate_calories_button)
 
-        // Thiết lập LayoutManager cho RecyclerView
+        // Lấy user_id từ SharedPreferences
+        val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
+        userId = sharedPref.getInt("user_id", -1)
+
+        if (userId == -1) {
+            Toast.makeText(this, "Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.", Toast.LENGTH_LONG).show()
+        }
+
         foodListRecyclerView.layoutManager = LinearLayoutManager(this)
-
-        // Khởi tạo Adapter và gán cho RecyclerView, truyền this làm listener
         foodListAdapter = FoodListAdapter(foodItems, this)
         foodListRecyclerView.adapter = foodListAdapter
+
+        // Khởi tạo ViewModel
+        foodEntryViewModel = ViewModelProvider(this).get(FoodEntryViewModel::class.java)
+
+        // Quan sát LiveData message từ ViewModel
+        foodEntryViewModel.message.observe(this) { message ->
+            if (message.isNotEmpty()) {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Quan sát LiveData isLoading từ ViewModel (nếu bạn muốn hiển thị loading)
+        foodEntryViewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                // Hiển thị progress bar
+            } else {
+                // Ẩn progress bar
+            }
+        }
 
         addButton.setOnClickListener {
             val foodName = foodNameInput.text.toString().trim()
@@ -52,6 +87,33 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
                 }
             } else {
                 Toast.makeText(this, "Vui lòng nhập tên món ăn và số lượng", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        calculateCaloriesButton.setOnClickListener {
+            if (userId != -1) {
+                for (item in foodItems) {
+                    val parts = item.split(" - Số lượng: ")
+                    if (parts.size == 2) {
+                        val foodName = parts[0].trim()
+                        val quantityStr = parts[1].trim()
+                        try {
+                            val quantity = quantityStr.toInt()
+                            foodEntryViewModel.saveFoodEntry(userId, foodName, quantity)
+                        } catch (e: NumberFormatException) {
+                            Toast.makeText(this, "Lỗi định dạng số lượng: $item", Toast.LENGTH_SHORT).show()
+                            return@setOnClickListener
+                        }
+                    } else {
+                        Toast.makeText(this, "Lỗi định dạng món ăn: $item", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+                }
+                Toast.makeText(this@AnalysisActivity, "Đã gửi yêu cầu lưu thông tin calo", Toast.LENGTH_SHORT).show()
+                foodItems.clear()
+                foodListAdapter.notifyDataSetChanged()
+            } else {
+                Toast.makeText(this@AnalysisActivity, "Chưa có thông tin người dùng để lưu.", Toast.LENGTH_SHORT).show()
             }
         }
     }

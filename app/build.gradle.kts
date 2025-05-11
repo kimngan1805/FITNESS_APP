@@ -70,5 +70,8 @@ dependencies {
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0-alpha01")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0-alpha01")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.0-alpha01")
 
 }
