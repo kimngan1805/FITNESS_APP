@@ -56,7 +56,7 @@ class BodyParameterActivity : AppCompatActivity() {
             val medicalCondition = binding.medicalConditionEditText.text.toString()
             val workoutLevel = binding.workoutLevelSpinner.selectedItem.toString() // Lấy mức độ tập luyện đã chọn
             val improvementGoal = binding.improvementEditText.selectedItem.toString()
-
+            val gender=binding.genderEditText.text.toString()
             // Kiểm tra các trường nhập liệu không được để trống
             if (weight.isNotEmpty() && height.isNotEmpty() && age.isNotEmpty() && workoutLevel != "Chưa chọn" && improvementGoal.isNotEmpty()) {
                 // Gọi API để gửi dữ liệu khảo sát
@@ -71,7 +71,8 @@ class BodyParameterActivity : AppCompatActivity() {
                     age.toInt(),
                     medicalCondition,
                     workoutLevel,
-                    improvementGoal
+                    improvementGoal,
+                    gender
                 )
 
                 // Enqueue API call

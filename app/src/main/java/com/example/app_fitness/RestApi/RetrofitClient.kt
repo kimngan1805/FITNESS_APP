@@ -1,6 +1,4 @@
 package com.example.app_fitness.RestApi
-
-import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

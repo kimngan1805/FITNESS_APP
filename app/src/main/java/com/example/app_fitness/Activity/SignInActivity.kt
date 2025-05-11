@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.app_fitness.MainActivity
 import com.example.app_fitness.Response.LoginResponse
 import com.example.app_fitness.RestApi.RetrofitClient
 import com.example.app_fitness.databinding.ActivitySignInBinding

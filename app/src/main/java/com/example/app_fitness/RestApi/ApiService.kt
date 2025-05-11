@@ -3,10 +3,13 @@ package com.example.app_fitness.RestApi
 import com.example.app_fitness.Entity.AddedExercise
 import com.example.app_fitness.Entity.CategoryRequest
 import com.example.app_fitness.Entity.Comment
+import com.example.app_fitness.Entity.DailyFoodItem
 import com.example.app_fitness.Entity.ExerciseRequest
 import com.example.app_fitness.Entity.FeedItem
+import com.example.app_fitness.Entity.FoodItem
 import com.example.app_fitness.Entity.MarkCompletedRequest
 import com.example.app_fitness.Entity.UserData
+import com.example.app_fitness.Entity.UserInfoRequest
 import com.example.app_fitness.Entity.WorkoutLevel
 import com.example.app_fitness.Response.CommentCountResponse
 import com.example.app_fitness.Response.HasExercisesResponse
@@ -50,7 +53,8 @@ interface ApiService {
         @Field("age") age: Int,
         @Field("medical_condition") medicalCondition: String,
         @Field("workout_level") workoutLevel: String,
-        @Field("improvement_goal") improvementGoal: String
+        @Field("improvement_goal") improvementGoal: String,
+        @Field("gender") gender:String
     ): Call<UpdateUserResponse>
     @GET("get_categories.php")
     fun getCategories(@Query("gender") gender: String): Call<List<CategoryRequest>>
@@ -138,4 +142,15 @@ interface ApiService {
         @Field("quantity") quantity: Int,
     ): Call<Void>
 
+    @GET("get_daily_food_list.php")
+    fun getDailyFoodList(
+        @Query("user_id") userId: Int,
+        @Query("date") date: String // Định dạng YYYY-MM-DD
+    ): Call<List<DailyFoodItem>>
+
+    @GET("get_food_details.php") // Endpoint mới
+    fun getFoodDetails(@Query("food_name") foodName: String): Call<FoodItem>
+
+    @GET("get_user_analysis.php") // Endpoint mới
+    fun getUserAnalysis(@Query("user_id") userId: Int): Call<UserInfoRequest>
 }

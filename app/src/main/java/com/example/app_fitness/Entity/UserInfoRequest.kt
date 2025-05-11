@@ -1,11 +1,18 @@
 package com.example.app_fitness.Entity
 
-data class UserInfoRequest (
+import com.google.gson.annotations.SerializedName
+
+data class UserInfoRequest(
+    val id: Int,
+    @SerializedName("userId")  // Ánh xạ "userId" từ JSON sang user_id
     val user_id: Int,
     val weight: Float,
-    val height: Int,
+    val height: Float,
     val age: Int,
-    val medical_condition: String,
-    val workout_level: String,
-    val improvement_goal: String
+    val medical_condition: String?,
+    @SerializedName("workoutLevel")
+    val workout_level: String?,
+    @SerializedName("improvementGoal")
+    val improvement_goal: String?,
+    val gender: String
 )
