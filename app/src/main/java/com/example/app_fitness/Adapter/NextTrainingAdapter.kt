@@ -37,8 +37,8 @@ class NextTrainingAdapter(
     }
 
     private fun isExerciseUnlocked(exerciseId: Int): Boolean {
-        // Kiểm tra xem bài tập có nằm trong danh sách đã hoàn thành không
-        return completedExerciseIds.contains(exerciseId)
+        // Kiểm tra xem bài tập CÓ NẰM TRONG danh sách đã hoàn thành không.  Đảo ngược logic.
+        return !completedExerciseIds.contains(exerciseId)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NextTrainingViewHolder {
@@ -65,4 +65,3 @@ class NextTrainingAdapter(
 
     override fun getItemCount() = exercises.size
 }
-

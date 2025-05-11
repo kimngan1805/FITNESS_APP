@@ -30,6 +30,7 @@ class DashboardActivity : AppCompatActivity() {
     private val nextTrainingExercises = mutableListOf<ExerciseRequest>()
     private var completedExerciseIds: List<Int> = emptyList() // Danh sách ID bài tập đã hoàn thành
     private var userId: Int = -1
+    private var nextExercise: ExerciseRequest? = null // Bài tập tiếp theo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

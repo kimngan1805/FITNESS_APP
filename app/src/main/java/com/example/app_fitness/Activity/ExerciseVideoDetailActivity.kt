@@ -24,25 +24,20 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
     private var currentExercise: ExerciseRequest? = null
     private var userId: Int = -1
     private var completedExerciseIds: List<Int> = emptyList() // Danh sách ID bài tập đã hoàn thành
-
+    private lateinit var backButton: Button // Declare backButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise_video_detail)
-
         youtubePlayerView = findViewById(R.id.youtube_player_view)
         exerciseTitleTextView = findViewById(R.id.exerciseTitleTextView)
         doneButton = findViewById(R.id.doneButton)
-
         currentExercise = intent.getParcelableExtra<ExerciseRequest>("exercise")
-
         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
         userId = sharedPref.getInt("user_id", -1)
-
         currentExercise?.let {
             Log.d("ExerciseDetail", "Gender: ${it.gender}, Video URL: ${it.video_url}")
             exerciseTitleTextView.text = it.exercise_name
             lifecycle.addObserver(youtubePlayerView!!)
-
             youtubePlayerView?.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     val videoId = extractVideoIdFromUrl(it.video_url)
@@ -54,14 +49,12 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
                 }
             })
         }
-
         // Lấy danh sách bài tập đã hoàn thành
         if (userId != -1) {
             getCompletedExercises()
         } else {
             Toast.makeText(this, "Bạn cần đăng nhập để xem tiến trình", Toast.LENGTH_SHORT).show()
         }
-
         doneButton.setOnClickListener {
             currentExercise?.let { exercise ->
                 if (userId != -1) {
@@ -72,7 +65,6 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun extractVideoIdFromUrl(url: String): String {
         val videoIdRegex = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|/video/)([\\w-]+)"
         val pattern = Regex(videoIdRegex)
@@ -100,7 +92,6 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
             }
         })
     }
-
     private fun getCompletedExercises() {
         RetrofitClient.instance.getCompletedExercises(userId).enqueue(object : Callback<List<Int>> {
             override fun onResponse(call: Call<List<Int>>, response: Response<List<Int>>) {
@@ -119,7 +110,6 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
             }
         })
     }
-
     private fun updateUI() {
         currentExercise?.let { exercise ->
             if (completedExerciseIds.contains(exercise.id)) {
@@ -131,7 +121,6 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
             }
         }
     }
-
     override fun onDestroy() {
         super.onDestroy()
         youtubePlayerView?.release()

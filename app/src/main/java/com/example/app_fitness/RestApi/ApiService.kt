@@ -127,7 +127,7 @@ interface ApiService {
     fun getCompletedExercises(@Query("user_id") userId: Int): Call<List<Int>>
 
 
-    @GET("get_next_training_exercise.php")
+    @GET("get_next_training_exercises.php")
     fun getNextTrainingExercise(@Query("user_id") userId: Int): Call<ExerciseRequest?>
 
 }
