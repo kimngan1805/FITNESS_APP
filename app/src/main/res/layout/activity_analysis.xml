@@ -8,6 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="?attr/homeAsUpIndicator"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back" />
 
         <TextView
             android:layout_width="wrap_content"

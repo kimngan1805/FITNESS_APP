@@ -38,7 +38,8 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
     private lateinit var totalCaloriesTextView: TextView
     private lateinit var predictedCaloriesTextView: TextView// Thêm biến cho textview hiển thị lượng calo dự đoán
     private lateinit var refreshButton: ImageButton // Khai báo nút refresh
-
+    private lateinit var caloriesBurnedTextView: TextView // Khai báo TextView để hiển thị calories đã đốt
+    private lateinit var backButton: ImageButton // Khai báo nút back
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_analysis)
@@ -56,6 +57,9 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
         dailyFoodListRecyclerView = findViewById(R.id.daily_food_list_recycler_view)
         emptyDailyFoodMessage = findViewById(R.id.empty_daily_food_message)
         refreshButton = findViewById(R.id.refresh_button) // Ánh xạ nút refresh từ layout
+        backButton = findViewById(R.id.back_button) // Ánh xạ nút back
+        caloriesBurnedTextView =
+            findViewById(R.id.calories_burned)  // Ánh xạ TextView hiển thị calories
         // Lấy user_id từ SharedPreferences
         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
         userId = sharedPref.getInt("user_id", -1)
@@ -115,10 +119,17 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
             ) // Để debug
         }
 
+
+        // Quan sát caloriesBurned
+        foodEntryViewModel.caloriesBurned.observe(this) { calories ->
+            Log.d("AnalysisActivity", "Calories burned observed: $calories") // Log giá trị calories
+            caloriesBurnedTextView.text = "${String.format("%.2f", calories)} kcal"
+        }
+
         // Gọi API để lấy danh sách món ăn hôm nay
         fetchDailyFoodList()
         fetchUserData() // Gọi hàm này để lấy thông tin người dùng
-
+        fetchCaloriesBurned() // Gọi hàm để lấy lượng calories đã đốt
         // Thiết lập OnClickListener cho nút refresh
         refreshButton.setOnClickListener {
             fetchDailyFoodList() // Gọi lại hàm fetchDailyFoodList để tải lại dữ liệu
@@ -126,6 +137,10 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
             Toast.makeText(this, "Đã tải lại thực đơn", Toast.LENGTH_SHORT).show()
         }
 
+        // Xử lý sự kiện click nút back
+        backButton.setOnClickListener {
+            finish() // Kết thúc Activity hiện tại và quay lại Activity trước đó
+        }
         addButton.setOnClickListener {
             val foodName = foodNameInput.text.toString().trim()
             val quantityStr = quantityInput.text.toString().trim()
@@ -196,6 +211,15 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
 
     private fun fetchUserData() {
         foodEntryViewModel.fetchUserData()
+    }
+
+    private fun fetchCaloriesBurned() {
+        if (userId != -1) {
+            Log.d("AnalysisActivity", "Fetching calories burned for userId: $userId") // Log trước khi gọi fetch
+            foodEntryViewModel.fetchCaloriesBurned(userId)
+        } else {
+            Toast.makeText(this, "Chưa có thông tin người dùng để lấy lượng calories đã đốt.", Toast.LENGTH_SHORT).show()
+        }
     }
 
 

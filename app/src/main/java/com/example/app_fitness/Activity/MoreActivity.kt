@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.app_fitness.Activity.ProfileActivity
-import com.example.app_fitness.Activity.MesuareActivity
 import com.example.app_fitness.R
 import com.example.app_fitness.databinding.ActivityMoreBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -23,9 +21,21 @@ class MoreActivity : AppCompatActivity() {
         binding.apply {
             // binding là đối tượng chứa toàn bộ View trong activity_more.xml
             // Ví dụ xử lý logout
-            val logoutRow = binding.root.findViewWithTag<LinearLayout>("logoutRow") // nếu bạn có setTag
-            // hoặc dùng binding.root.getChildAt(index) nếu bạn không có ID cụ thể
-            // Tốt hơn: gán ID cho các LinearLayout nếu cần xử lý sự kiện
+            val logoutRow = binding.root.findViewById<LinearLayout>(R.id.rowLogOut) // Correct ID to rowLogOut
+
+            logoutRow.setOnClickListener {
+                // Clear user session (e.g., SharedPreferences)
+                val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
+                val editor = sharedPref.edit()
+                editor.clear() // Clear all stored data
+                editor.apply()
+
+                // Redirect to SignInActivity
+                val intent = Intent(this@MoreActivity, SignInActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // Clear back stack
+                startActivity(intent)
+                finish() // Finish the current activity
+            }
         }
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
@@ -38,7 +48,7 @@ class MoreActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_feed -> {
-                    startActivity(Intent(this, WorkoutLevelActivity::class.java))
+                    startActivity(Intent(this, FeedActivity::class.java))
                     true
                 }
 

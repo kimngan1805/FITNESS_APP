@@ -11,6 +11,7 @@ import com.example.app_fitness.Entity.MarkCompletedRequest
 import com.example.app_fitness.Entity.UserData
 import com.example.app_fitness.Entity.UserInfoRequest
 import com.example.app_fitness.Entity.WorkoutLevel
+import com.example.app_fitness.Response.CaloriesBurnedResponse
 import com.example.app_fitness.Response.CommentCountResponse
 import com.example.app_fitness.Response.HasExercisesResponse
 import com.example.app_fitness.Response.LoginResponse
@@ -153,4 +154,6 @@ interface ApiService {
 
     @GET("get_user_analysis.php") // Endpoint mới
     fun getUserAnalysis(@Query("user_id") userId: Int): Call<UserInfoRequest>
+    @GET("get_calories_excercise.php")  // Đặt tên file PHP của bạn
+    fun getCaloriesBurned(@Query("user_id") userId: Int): Call<CaloriesBurnedResponse>
 }

@@ -82,7 +82,7 @@ class BodyParameterActivity : AppCompatActivity() {
                             val updateResponse = response.body()
                             Toast.makeText(this@BodyParameterActivity, updateResponse?.message, Toast.LENGTH_LONG).show()
                             // Chuyển đến MainActivity sau khi lưu thành công
-                            val intent = Intent(this@BodyParameterActivity, MainActivity::class.java)
+                            val intent = Intent(this@BodyParameterActivity, WorkoutPlanActivity::class.java)
                             startActivity(intent)
                             finish() // Kết thúc màn hình hiện tại (BodyParameterActivity)
                         } else {

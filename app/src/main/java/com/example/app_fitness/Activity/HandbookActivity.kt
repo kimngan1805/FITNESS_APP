@@ -46,7 +46,7 @@ class HandbookActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_feed -> {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, FeedActivity::class.java))
                     true
                 }
                 R.id.menu_messages -> {

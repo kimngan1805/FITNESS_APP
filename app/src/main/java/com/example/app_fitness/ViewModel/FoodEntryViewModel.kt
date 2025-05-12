@@ -24,6 +24,7 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
     val dailyFoodList = MutableLiveData<List<DailyFoodItem>>()
     val predictedCalories = MutableLiveData<Double>()
     private var userInfoRequest: UserInfoRequest? = null
+    val caloriesBurned = MutableLiveData<Double>()
     // Lấy context từ application
     private val context: Context = application.applicationContext
 
@@ -73,8 +74,7 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
                 withContext(Dispatchers.Main) {
                     message.value = "Lỗi mạng khi tải thực đơn hôm nay: ${e.message}"
                 }
-            } finally {
-                isLoading.postValue(false)
+
             }
         }
     }
@@ -205,5 +205,34 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
         }
         Log.d("FoodEntryViewModel", "Final TDEE: $tdee")
         return tdee
+    }
+    fun fetchCaloriesBurned(userId: Int) {
+        Log.d("FoodEntryViewModel", "fetchCaloriesBurned called with userId: $userId") // Log userId
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = RetrofitClient.instance.getCaloriesBurned(userId).execute()
+                if (response.isSuccessful) {
+                    val calories = response.body()?.caloriesBurned ?: 0.0
+                    Log.d("FoodEntryViewModel", "Calories burned from API: $calories") // Log dữ liệu trả về
+                    withContext(Dispatchers.Main) {
+                        caloriesBurned.value = calories
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        message.value = "Lỗi khi lấy lượng calories đã đốt: ${response.message()}"
+                        caloriesBurned.value = 0.0
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    message.value = "Lỗi mạng: ${e.message}"
+                    caloriesBurned.value = 0.0
+                }
+
+            } finally {
+                isLoading.postValue(false)
+            }
+        }
     }
 }
