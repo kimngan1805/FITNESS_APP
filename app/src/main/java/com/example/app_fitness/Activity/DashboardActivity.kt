@@ -42,17 +42,27 @@ class DashboardActivity : AppCompatActivity() {
         if (userId != -1) {
             loadLatestAddedExercise(userId)
             loadNextTrainingExercises() // Gọi hàm này để lấy danh sách bài tập
+
+// Gọi load completed trước, rồi sau đó mới load bài tập tiếp theo
+            loadCompletedExerciseIds {
+                loadNextTrainingExercises()
+            }
+
         } else {
             binding.exerciseNameTextView.text = "Chưa đăng nhập"
             binding.workoutImageHeader.setImageResource(R.drawable.activity_hinh)
             Toast.makeText(this, "Vui lòng đăng nhập để xem bài tập", Toast.LENGTH_SHORT).show()
-            nextTrainingAdapter = NextTrainingAdapter(this, nextTrainingExercises, { exercise ->
-                // Handle exercise click
+            nextTrainingAdapter = NextTrainingAdapter(
+                this,
+                mutableListOf(), // danh sách trống
+                emptyList()      // completedIds cũng trống
+            ) { exercise ->
                 val intent = Intent(this, ExerciseVideoDetailActivity::class.java)
                 intent.putExtra("exercise", exercise)
                 startActivity(intent)
-            })  // Truyền một danh sách trống nếu không có người dùng.
+            }
             binding.nextTrainingRecyclerView.adapter = nextTrainingAdapter
+
         }
 
         binding.backButton.setOnClickListener {
@@ -176,7 +186,22 @@ class DashboardActivity : AppCompatActivity() {
             })
     }
 
+    private fun loadCompletedExerciseIds(onLoaded: () -> Unit) {
+        RetrofitClient.instance.getCompletedExercises(userId)
+            .enqueue(object : Callback<List<Int>> {
+                override fun onResponse(call: Call<List<Int>>, response: Response<List<Int>>) {
+                    if (response.isSuccessful) {
+                        completedExerciseIds = response.body() ?: emptyList()
+                    }
+                    onLoaded()
+                }
 
+                override fun onFailure(call: Call<List<Int>>, t: Throwable) {
+                    completedExerciseIds = emptyList()
+                    onLoaded()
+                }
+            })
+    }
     private fun loadNextTrainingExercises() {
         RetrofitClient.instance.getNextTraining(userId = userId)
             .enqueue(object : Callback<List<ExerciseDetailRequest>> {
@@ -185,25 +210,24 @@ class DashboardActivity : AppCompatActivity() {
                     response: Response<List<ExerciseDetailRequest>>
                 ) {
                     Log.d("NextTraining", "Dữ liệu trả về: ${response.body()}")
+                    Log.d("NextTraining", "Dữ liệu bài tập tiếp theo: ${response.body()}")
 
                     if (response.isSuccessful) {
                         val exercises = response.body() ?: emptyList()
                         nextTrainingExercises.clear()
                         nextTrainingExercises.addAll(exercises)
 
-                        // Cập nhật adapter
                         nextTrainingAdapter = NextTrainingAdapter(
                             this@DashboardActivity,
-                            nextTrainingExercises
+                            nextTrainingExercises,
+                            completedExerciseIds // <-- THÊM dòng này
                         ) { exercise ->
-                            val intent = Intent(
-                                this@DashboardActivity,
-                                ExerciseVideoDetailActivity::class.java
-                            )
+                            val intent = Intent(this@DashboardActivity, ExerciseVideoDetailActivity::class.java)
                             intent.putExtra("exercise", exercise)
                             startActivity(intent)
                         }
                         binding.nextTrainingRecyclerView.adapter = nextTrainingAdapter
+
                     } else {
                         Toast.makeText(
                             this@DashboardActivity,

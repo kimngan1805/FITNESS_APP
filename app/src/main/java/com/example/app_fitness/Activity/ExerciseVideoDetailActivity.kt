@@ -118,7 +118,7 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
     }
     private fun updateUI() {
         currentExercise?.let { exercise ->
-            if (completedExerciseIds.contains(exercise.exerciseId)) {
+            if (completedExerciseIds.contains(exercise.detailId)) {
                 doneButton.isEnabled = false // Vô hiệu hóa nút "Done"
                 doneButton.text = "Đã hoàn thành" // Thay đổi text
             } else {
