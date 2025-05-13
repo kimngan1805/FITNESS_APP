@@ -23,6 +23,7 @@ data class ExerciseRequest(
     val video_url: String,
     @SerializedName("image_url")
     val image_url: String,
-    val unlock_order: Int // Thêm unlock_order vào đây
+    val unlock_order: Int,
+    val detail_name: String
 
 ): Parcelable

@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.app_fitness.Entity.ExerciseDetailRequest
 import com.example.app_fitness.Entity.ExerciseRequest
 import com.example.app_fitness.R
 import com.google.android.exoplayer2.util.Log
@@ -21,7 +22,7 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
     private var youtubePlayerView: YouTubePlayerView? = null
     private lateinit var exerciseTitleTextView: TextView
     private lateinit var doneButton: Button
-    private var currentExercise: ExerciseRequest? = null
+    private var currentExercise: ExerciseDetailRequest? = null
     private var userId: Int = -1
     private var completedExerciseIds: List<Int> = emptyList() // Danh sách ID bài tập đã hoàn thành
     private lateinit var backButton: Button // Declare backButton
@@ -31,16 +32,16 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
         youtubePlayerView = findViewById(R.id.youtube_player_view)
         exerciseTitleTextView = findViewById(R.id.exerciseTitleTextView)
         doneButton = findViewById(R.id.doneButton)
-        currentExercise = intent.getParcelableExtra<ExerciseRequest>("exercise")
+        currentExercise = intent.getParcelableExtra<ExerciseDetailRequest>("exercise")
         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
         userId = sharedPref.getInt("user_id", -1)
         currentExercise?.let {
-            Log.d("ExerciseDetail", "Gender: ${it.gender}, Video URL: ${it.video_url}")
-            exerciseTitleTextView.text = it.exercise_name
+            Log.d("ExerciseDetail", " Video URL: ${it.videoUrl}")
+            exerciseTitleTextView.text = it.detailName
             lifecycle.addObserver(youtubePlayerView!!)
             youtubePlayerView?.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
-                    val videoId = extractVideoIdFromUrl(it.video_url)
+                    val videoId = extractVideoIdFromUrl(it.videoUrl)
                     if (videoId.isNotEmpty()) {
                         youTubePlayer.loadVideo(videoId, 0f)
                     } else {
@@ -58,12 +59,17 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
         doneButton.setOnClickListener {
             currentExercise?.let { exercise ->
                 if (userId != -1) {
-                    markExerciseAsCompleted(userId, exercise.id)
+                    markExerciseAsCompleted(userId, exercise.detailId)
                 } else {
                     Toast.makeText(this, "Bạn cần đăng nhập để lưu tiến trình", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+        backButton = findViewById(R.id.backButton)
+        backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed() // hoặc dùng finish() nếu muốn đơn giản
+        }
+
     }
     private fun extractVideoIdFromUrl(url: String): String {
         val videoIdRegex = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|/video/)([\\w-]+)"
@@ -72,8 +78,8 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
         return matchResult?.value ?: ""
     }
 
-    private fun markExerciseAsCompleted(userId: Int, exerciseId: Int) {
-        RetrofitClient.instance.markExerciseCompleted(userId, exerciseId).enqueue(object : Callback<Void> {
+    private fun markExerciseAsCompleted(userId: Int, detailId: Int) {
+        RetrofitClient.instance.markExerciseCompleted(userId, detailId).enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@ExerciseVideoDetailActivity, "Đã đánh dấu hoàn thành!", Toast.LENGTH_SHORT).show()
@@ -112,7 +118,7 @@ class ExerciseVideoDetailActivity : AppCompatActivity() {
     }
     private fun updateUI() {
         currentExercise?.let { exercise ->
-            if (completedExerciseIds.contains(exercise.id)) {
+            if (completedExerciseIds.contains(exercise.exerciseId)) {
                 doneButton.isEnabled = false // Vô hiệu hóa nút "Done"
                 doneButton.text = "Đã hoàn thành" // Thay đổi text
             } else {

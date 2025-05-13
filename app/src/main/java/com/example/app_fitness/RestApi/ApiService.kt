@@ -4,6 +4,7 @@ import com.example.app_fitness.Entity.AddedExercise
 import com.example.app_fitness.Entity.CategoryRequest
 import com.example.app_fitness.Entity.Comment
 import com.example.app_fitness.Entity.DailyFoodItem
+import com.example.app_fitness.Entity.ExerciseDetailRequest
 import com.example.app_fitness.Entity.ExerciseRequest
 import com.example.app_fitness.Entity.FeedItem
 import com.example.app_fitness.Entity.FoodItem
@@ -124,15 +125,18 @@ interface ApiService {
     @POST("mark_exercise_completed.php")
     fun markExerciseCompleted(
         @Field("user_id") userId: Int,
-        @Field("exercise_id") exerciseId: Int
+        @Field("detail_id") detailId: Int
     ): Call<Void>
 
     @GET("get_completed_exercises.php") // Thêm endpoint mới
     fun getCompletedExercises(@Query("user_id") userId: Int): Call<List<Int>>
 
 
-    @GET("get_next_training_exercises.php")
-    fun getNextTrainingExercise(@Query("user_id") userId: Int): Call<ExerciseRequest?>
+    @GET("get_exercise_by_id.php")
+    fun getNextTraining(
+        @Query("action") action: String = "get_next_training",
+        @Query("user_id") userId: Int
+    ): Call<List<ExerciseDetailRequest>>
 
     @FormUrlEncoded
     @POST("save_calorie_entry.php") // Endpoint PHP để lưu một mục calo
