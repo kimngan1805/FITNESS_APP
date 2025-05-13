@@ -136,7 +136,8 @@ interface ApiService {
     @GET("get_exercise_by_id.php")
     fun getNextTraining(
         @Query("action") action: String = "get_next_training",
-        @Query("user_id") userId: Int
+        @Query("user_id") userId: Int,
+        @Query("exercise_id") exerciseId: Int
     ): Call<List<ExerciseDetailRequest>>
 
     @FormUrlEncoded

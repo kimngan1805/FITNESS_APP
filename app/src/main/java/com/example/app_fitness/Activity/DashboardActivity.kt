@@ -242,50 +242,90 @@ class DashboardActivity : AppCompatActivity() {
             })
     }
     private fun loadNextTrainingExercises() {
-        RetrofitClient.instance.getNextTraining(userId = userId)
-            .enqueue(object : Callback<List<ExerciseDetailRequest>> {
+        RetrofitClient.instance.getUserExercises(userId)
+            .enqueue(object : Callback<List<AddedExercise>> {
                 override fun onResponse(
-                    call: Call<List<ExerciseDetailRequest>>,
-                    response: Response<List<ExerciseDetailRequest>>
+                    call: Call<List<AddedExercise>>,
+                    response: Response<List<AddedExercise>>
                 ) {
-                    Log.d("NextTraining", "Dữ liệu trả về: ${response.body()}")
-                    Log.d("NextTraining", "Dữ liệu bài tập tiếp theo: ${response.body()}")
-
                     if (response.isSuccessful) {
-                        val exercises = response.body() ?: emptyList()
-                        nextTrainingExercises.clear()
-                        nextTrainingExercises.addAll(exercises)
+                        val addedExercises = response.body() ?: emptyList()
+                        if (addedExercises.isNotEmpty()) {
+                            val latestExerciseId = addedExercises.first().exercise_id
+                            // Gọi getNextTraining với exerciseId
+                            RetrofitClient.instance.getNextTraining(userId = userId, exerciseId = latestExerciseId)
+                                .enqueue(object : Callback<List<ExerciseDetailRequest>> {
+                                    override fun onResponse(
+                                        call: Call<List<ExerciseDetailRequest>>,
+                                        response: Response<List<ExerciseDetailRequest>>
+                                    ) {
+                                        Log.d("NextTraining", "Dữ liệu trả về: ${response.body()}")
+                                        Log.d("NextTraining", "Dữ liệu bài tập tiếp theo: ${response.body()}")
 
-                        nextTrainingAdapter = NextTrainingAdapter(
-                            this@DashboardActivity,
-                            nextTrainingExercises,
-                            completedExerciseIds // <-- THÊM dòng này
-                        ) { exercise ->
-                            val intent = Intent(this@DashboardActivity, ExerciseVideoDetailActivity::class.java)
-                            intent.putExtra("exercise", exercise)
-                            startActivity(intent)
+                                        if (response.isSuccessful) {
+                                            val exercises = response.body() ?: emptyList()
+                                            nextTrainingExercises.clear()
+                                            nextTrainingExercises.addAll(exercises)
+
+                                            nextTrainingAdapter = NextTrainingAdapter(
+                                                this@DashboardActivity,
+                                                nextTrainingExercises,
+                                                completedExerciseIds
+                                            ) { exercise ->
+                                                val intent = Intent(
+                                                    this@DashboardActivity,
+                                                    ExerciseVideoDetailActivity::class.java
+                                                )
+                                                intent.putExtra("exercise", exercise)
+                                                startActivity(intent)
+                                            }
+                                            binding.nextTrainingRecyclerView.adapter = nextTrainingAdapter
+
+                                        } else {
+                                            Toast.makeText(
+                                                this@DashboardActivity,
+                                                "Lỗi tải bài tập tiếp theo",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<List<ExerciseDetailRequest>>, t: Throwable) {
+                                        Toast.makeText(
+                                            this@DashboardActivity,
+                                            "Lỗi kết nối khi tải bài tập tiếp theo",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                })
+                        } else {
+                            // Xử lý trường hợp không có bài tập đã thêm
+                            nextTrainingExercises.clear()
+                            nextTrainingAdapter = NextTrainingAdapter(
+                                this@DashboardActivity,
+                                emptyList(),
+                                completedExerciseIds
+                            ) { /* ... */ }
+                            binding.nextTrainingRecyclerView.adapter = nextTrainingAdapter
                         }
-                        binding.nextTrainingRecyclerView.adapter = nextTrainingAdapter
-
                     } else {
                         Toast.makeText(
                             this@DashboardActivity,
-                            "Lỗi tải bài tập tiếp theo",
+                            "Lỗi khi tải danh sách bài tập đã thêm",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
 
-                override fun onFailure(call: Call<List<ExerciseDetailRequest>>, t: Throwable) {
+                override fun onFailure(call: Call<List<AddedExercise>>, t: Throwable) {
                     Toast.makeText(
                         this@DashboardActivity,
-                        "Lỗi kết nối khi tải bài tập tiếp theo",
+                        "Lỗi kết nối khi tải danh sách bài tập",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             })
     }
-
 
 
 }
