@@ -101,10 +101,11 @@ class FeedAdapter(private val feedList: List<FeedItem>, private val currentUsern
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
                         Log.d("FeedAdapter", "Comment added successfully")
-                        // Gọi callback để refresh bình luận nếu cần
-                    } else {
-                        Log.e("FeedAdapter", "Failed to add comment: ${response.code()}")
-                        // Xử lý lỗi
+                        loadInlineComments(postId)
+                        // Cập nhật số lượng bình luận
+                        val currentCount = commentCount.text.toString().toIntOrNull() ?: 0
+                        commentCount.text = (currentCount + 1).toString()
+                        viewComments?.text = "Xem ${currentCount + 1} bình luận..."
                     }
                 }
 
@@ -209,6 +210,7 @@ class FeedAdapter(private val feedList: List<FeedItem>, private val currentUsern
         val binding = ItemFeedBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FeedViewHolder(binding)
     }
+
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
         val currentItem = feedList[position]

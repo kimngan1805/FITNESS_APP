@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
         <item
             android:id="@+id/nav_workouts"
             android:icon="@drawable/ic_workout" android:title="Workouts" />
         <item
             android:id="@+id/nav_diet"
-            android:icon="@drawable/ic_analysis" android:title="Diet" />
+            android:icon="@drawable/ic_analysis" android:title="Phân tích calories" />
         <item
             android:id="@+id/nav_sports_nutrition"
             android:icon="@drawable/ic_mesuare" android:title="Sports nutri..." />
         <item
             android:id="@+id/add_workout"
-            android:icon="@drawable/ic_workout" android:title="Add Pre_Made Workout" />
+            android:icon="@drawable/ic_workout" android:title="Lịch sử thêm bài tập" />
 
 </menu>

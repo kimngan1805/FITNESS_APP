@@ -20,6 +20,7 @@ class MessageActivity : AppCompatActivity() { // Đổi tên class thành Messag
         super.onCreate(savedInstanceState)
         binding = ActivityMessageBinding.inflate(layoutInflater) // Khởi tạo binding với ActivityMessageBinding
         setContentView(binding.root)  // Sử dụng binding.root
+        binding.bottomNavigationView.selectedItemId = R.id.menu_messages
 
         // Sử dụng binding để truy cập các view
         val messagesTitle: TextView = binding.messagesTitle

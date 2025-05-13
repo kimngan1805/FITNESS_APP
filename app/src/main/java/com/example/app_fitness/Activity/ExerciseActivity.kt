@@ -24,6 +24,7 @@ class ExerciseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWorkoutExceciseBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.bottomNavigationView.selectedItemId = R.id.menu_feed
 
         val levelId = intent.getIntExtra("level_id", -1)
         val gender = intent.getStringExtra("gender") ?: "null"

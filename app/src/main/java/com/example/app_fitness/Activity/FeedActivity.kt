@@ -32,8 +32,9 @@ class FeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFeedBinding.inflate(layoutInflater)
-        binding.feedRecyclerView.adapter = FeedAdapter(feedItems, currentUsername)
+//        binding.feedRecyclerView.adapter = FeedAdapter(feedItems, currentUsername)
         setContentView(binding.root)
+        binding.bottomNavigationView.selectedItemId = R.id.menu_feed
 
         // Khởi tạo ApiService thông qua RetrofitClient
         apiService = RetrofitClient.instance
@@ -44,6 +45,7 @@ class FeedActivity : AppCompatActivity() {
         currentUsername = sharedPref.getString("fullname", "Your Name") // Lấy fullname
             // "user" là giá trị mặc định nếu không tìm thấy
         isAdmin = userRole == "admin"
+        binding.feedRecyclerView.adapter = FeedAdapter(feedItems, currentUsername)
 
         // Hiển thị/ẩn nút đăng bài dựa trên vai trò
         val plusButton: ImageView = binding.header.findViewById(R.id.plus_button)
@@ -72,6 +74,11 @@ class FeedActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             handleBottomNavigationSelection(item.itemId)
         }
+        val backButton: ImageView = binding.header.findViewById(R.id.back_button)
+        backButton.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed() // hoặc finish()
+        }
+
     }
 
     private fun loadFeeds() {
@@ -160,4 +167,10 @@ class FeedActivity : AppCompatActivity() {
             postTime ?: ""// Trả về "" nếu postTime null
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        loadFeeds()
+    }
+
 }

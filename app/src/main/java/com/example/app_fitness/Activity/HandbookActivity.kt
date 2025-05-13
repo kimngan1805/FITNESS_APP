@@ -3,7 +3,6 @@ package com.example.app_fitness.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.app_fitness.MainActivity
 import com.example.app_fitness.R
 import com.example.app_fitness.databinding.ActivityHandbookBinding
 
@@ -15,6 +14,7 @@ class HandbookActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHandbookBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.bottomNavigationView.selectedItemId = R.id.menu_handbook
 
         // Bạn có thể thêm logic xử lý sự kiện click cho các item tại đây
         binding.exercisesItem.setOnClickListener {

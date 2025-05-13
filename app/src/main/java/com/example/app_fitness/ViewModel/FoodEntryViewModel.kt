@@ -24,6 +24,7 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
     val dailyFoodList = MutableLiveData<List<DailyFoodItem>>()
     val predictedCalories = MutableLiveData<Double>()
     private var userInfoRequest: UserInfoRequest? = null
+    val caloriesNeeded = MutableLiveData<Double>()  // <-- dùng để hiển thị lên TextView
     val caloriesBurned = MutableLiveData<Double>()
     // Lấy context từ application
     private val context: Context = application.applicationContext
@@ -235,4 +236,47 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
+
+    fun calculateBMR(gender: String, weight: Double, height: Double, age: Int): Double {
+        return if (gender == "nam") {
+            10 * weight + 6.25 * height - 5 * age + 5
+        } else {
+            10 * weight + 6.25 * height - 5 * age - 161
+        }
+    }
+    fun getActivityFactor(activityLevel: String): Double {
+        return when (activityLevel.lowercase()) {
+            "Ít vận động" -> 1.2
+            "Vận động nhẹ" -> 1.375
+            "Vận động vừa" -> 1.55
+            "Vận động nhiều" -> 1.725
+            "Vận động rất nhiều" -> 1.9
+            else -> 1.2
+        }
+    }
+    fun calculateTargetCalories(
+        gender: String,
+        weight: Double,
+        height: Double,
+        age: Int,
+        activityLevel: String,
+        goal: String
+    ): Double {
+        val bmr = calculateBMR(gender, weight, height, age)
+        val activityFactor = getActivityFactor(activityLevel)
+        var tdee = bmr * activityFactor
+
+        // Điều chỉnh theo mục tiêu
+        tdee = when (goal.lowercase()) {
+            "giảm mỡ" -> tdee - 500 // deficit
+            "tăng cân" -> tdee + 500 // surplus
+            else -> tdee // giữ cân
+        }
+
+        return tdee
+    }
+
+
+
+
 }

@@ -1,190 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dashboardCoordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F5F5">
+    tools:context=".Activity.DashboardActivity">
 
-    <LinearLayout
+    <!-- Main Content -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:background="#F8F5F5"
+        android:paddingBottom="60dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/backButton"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_arrow_back"
-                app:tint="#000000" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Workouts"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/menuButton"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_menu1"
-                app:tint="#000000" />
-        </LinearLayout>
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="#FFFFFF"
-            app:cardCornerRadius="8dp">
-
+            <!-- Header -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginBottom="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp">
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="#000000" />
 
-                    <ImageView
-                        android:id="@+id/workoutImageHeader"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:alpha="0.7"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/activity_hinh" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Workouts"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/exerciseNameTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:text="WEIGHT LOSS"
-                        android:textColor="#000000"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/menuButton"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_menu1"
+                    app:tint="#000000" />
+            </LinearLayout>
+
+            <!-- Workout Header Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="For gym ⭐⭐⭐⭐ No experience"
-                        android:textColor="#757575"
-                        android:textSize="12sp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:text="24 workout days (3 sessions per week)"
-                        android:textColor="#757575"
-                        android:textSize="12sp" />
+                        <ImageView
+                            android:id="@+id/workoutImageHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:alpha="0.7"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/activity_hinh" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/exerciseNameTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:text="WEIGHT LOSS"
+                            android:textColor="#000000"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Workouts done: 0"
-                        android:textColor="#757575"
-                        android:textSize="12sp" />
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="For gym ⭐⭐⭐⭐ No experience"
+                            android:textColor="#757575"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="4dp"
+                            android:text="24 workout days (3 sessions per week)"
+                            android:textColor="#757575"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Workouts done: 0"
+                            android:textColor="#757575"
+                            android:textSize="12sp" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:text="Next training"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/nextTrainingTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:text="Next training"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/nextTrainingRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
-
-
-        <LinearLayout
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:orientation="horizontal">
-
+            <!-- Next Training -->
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Workout schedule"
+                android:layout_marginBottom="12dp"
+                android:text="Next training"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/nextTrainingTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp"
+                android:text="Next training"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nextTrainingRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Workout Schedule -->
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Workout schedule"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="More"
-                    android:textColor="#00BCD4"
-                    android:textSize="14sp" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="4dp"
-                    android:src="@drawable/ic_arrow"
-                    app:tint="#00BCD4" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="More"
+                        android:textColor="#00BCD4"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="4dp"
+                        android:src="@drawable/ic_arrow"
+                        app:tint="#00BCD4" />
+                </LinearLayout>
             </LinearLayout>
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp" />
+
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        app:menu="@menu/menu" />
 
-    </LinearLayout>
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

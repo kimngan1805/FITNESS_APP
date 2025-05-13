@@ -50,6 +50,7 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
         foodNameInput = findViewById(R.id.food_name_input)
         quantityInput = findViewById(R.id.quantity_input)
         calculateCaloriesButton = findViewById(R.id.calculate_calories_button)
+        foodEntryViewModel = ViewModelProvider(this).get(FoodEntryViewModel::class.java)
         totalCaloriesTextView =
             findViewById(R.id.calories_consumed) // Ánh xạ TextView tổng calo
         predictedCaloriesTextView = findViewById(R.id.calories_predicted) //ánh xạ text view lượng calo dự đoán
@@ -125,6 +126,9 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
             Log.d("AnalysisActivity", "Calories burned observed: $calories") // Log giá trị calories
             caloriesBurnedTextView.text = "${String.format("%.2f", calories)} kcal"
         }
+
+
+
 
         // Gọi API để lấy danh sách món ăn hôm nay
         fetchDailyFoodList()
@@ -221,6 +225,7 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
             Toast.makeText(this, "Chưa có thông tin người dùng để lấy lượng calories đã đốt.", Toast.LENGTH_SHORT).show()
         }
     }
+
 
 
 

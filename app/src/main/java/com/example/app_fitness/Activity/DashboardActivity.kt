@@ -32,7 +32,6 @@ class DashboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
         userId = sharedPref.getInt("user_id", -1)
 
@@ -75,14 +74,14 @@ class DashboardActivity : AppCompatActivity() {
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.nav_workouts -> {
-                        val intent = Intent(this@DashboardActivity, WorkoutsTabActivity::class.java)
+                        val intent = Intent(this@DashboardActivity, WorkoutPlanActivity::class.java)
                         startActivity(intent)
                         true
                     }
 
                     R.id.nav_diet -> {
-                        Toast.makeText(this@DashboardActivity, "Diet selected", Toast.LENGTH_SHORT)
-                            .show()
+                        val intent = Intent(this@DashboardActivity, AnalysisActivity::class.java)
+                        startActivity(intent)
                         true
                     }
 
@@ -106,6 +105,42 @@ class DashboardActivity : AppCompatActivity() {
             }
             popupMenu.show()
         }
+
+
+
+        val bottomNav = binding.bottomNavigation
+        bottomNav.selectedItemId = R.id.menu_workouts // <-- đánh dấu "Workouts" được chọn
+
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.menu_workouts -> {
+                    // Đang ở Dashboard -> không làm gì
+                    true
+                }
+                R.id.menu_feed -> {
+                    startActivity(Intent(this, FeedActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.menu_messages -> {
+                    startActivity(Intent(this, MessageActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.menu_handbook -> {
+                    startActivity(Intent(this, HandbookActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                R.id.menu_more -> {
+                    startActivity(Intent(this, MoreActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 
     override fun onResume() {

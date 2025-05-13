@@ -7,112 +7,148 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageButton
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="?attr/homeAsUpIndicator"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Back" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Theo dõi Calo Hôm Nay"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp" />
-
-        <ImageButton
-            android:id="@+id/refresh_button"
-            android:layout_width="162dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="25dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Tải lại"
-            android:padding="16dp"
-            android:src="@android:drawable/ic_popup_sync" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_marginBottom="16dp">
-
+        <!-- Thanh tiêu đề -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:orientation="horizontal">
 
-            <TextView
+            <ImageButton
+                android:id="@+id/back_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đốt được"
-                android:textSize="16sp" />
+                android:src="?attr/homeAsUpIndicator"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Back" />
 
             <TextView
-                android:id="@+id/calories_burned"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Theo dõi Calo Hôm Nay"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+            <ImageButton
+                android:id="@+id/refresh_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 kcal"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Tải lại"
+                android:padding="16dp"
+                android:src="@android:drawable/ic_popup_sync" />
         </LinearLayout>
 
+        <!-- 4 khung hiển thị calories -->
         <LinearLayout
-
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:layout_marginTop="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Hàng 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tiêu thụ"
-                android:textSize="16sp" />
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="8dp">
 
-            <TextView
-                android:id="@+id/calories_consumed"
-                android:layout_width="wrap_content"
+                <!-- Calories Burned -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_border_black"
+                    android:padding="12dp"
+                    android:layout_margin="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đốt được"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/calories_burned"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 kcal"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <!-- Calories Consumed -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_border_black"
+                    android:padding="12dp"
+                    android:layout_margin="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tiêu thụ"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/calories_consumed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 kcal"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Hàng 2 -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="0 kcal"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Calories Predicted -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_border_black"
+                    android:padding="12dp"
+                    android:layout_margin="4dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dự đoán"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/calories_predicted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 kcal"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dự đoán"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/calories_predicted"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0 kcal"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </LinearLayout>
 
     </LinearLayout>
 

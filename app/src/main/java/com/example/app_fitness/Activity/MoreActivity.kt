@@ -16,6 +16,7 @@ class MoreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMoreBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.bottomNavigationView.selectedItemId = R.id.menu_more
 
         // Ví dụ xử lý sự kiện click vào "Log out"
         binding.apply {
