@@ -71,6 +71,7 @@ class SignInActivity : AppCompatActivity() {
                         val fullname = loginResponse.fullname
                         val age = loginResponse.age
                         val userId = loginResponse.user_id
+                        Log.d("DEBUG_LOGIN", "user_id từ API: $userId")
 
                         // Chuyển tới màn hình chính hoặc màn hình khác sau khi đăng nhập thành công
                         val intent = Intent(this@SignInActivity, WorkoutPlanActivity::class.java)

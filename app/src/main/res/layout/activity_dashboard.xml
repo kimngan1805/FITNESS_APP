@@ -23,7 +23,7 @@
                 android:id="@+id/backButton"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/ic_arrow"
+                android:src="@drawable/ic_arrow_back"
                 app:tint="#000000" />
 
             <TextView
@@ -44,69 +44,6 @@
                 app:tint="#000000" />
         </LinearLayout>
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/tab_dashboard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/button_upin"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                    android:text="Dashboard"
-                    android:textAllCaps="false"
-                    android:textColor="#00BCD4"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/tab_workouts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/button_upin"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                    android:text="Workouts"
-                    android:textAllCaps="false"
-                    android:textColor="#757575"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/tab_diet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/button_upin"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                    android:text="Diet"
-                    android:textAllCaps="false"
-                    android:textColor="#757575"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/tab_sports_nutrition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_upin"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="8dp"
-                    android:text="Sports nutri..."
-                    android:textAllCaps="false"
-                    android:textColor="#757575"
-                    android:textSize="14sp" />
-            </LinearLayout>
-        </HorizontalScrollView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

@@ -98,7 +98,6 @@ interface ApiService {
     fun getUserExercises(@Query("user_id") userId: Int): Call<List<AddedExercise>>
     @GET("check_user_exercises.php")
     fun checkUserHasExercises(@Query("user_id") userId: Int): Call<HasExercisesResponse>
-
     @GET("get_exercises_training.php")
     fun getExercises(
         @Query("level_id") levelId: Int? = null,

@@ -43,8 +43,6 @@ class DashboardActivity : AppCompatActivity() {
         // Cấu hình RecyclerView cho "Next training"
         binding.nextTrainingRecyclerView.layoutManager = LinearLayoutManager(this)
 
-
-
         if (userId != -1) {
             loadLatestAddedExercise(userId)
             loadNextTrainingExercises() // Gọi hàm này để lấy danh sách bài tập

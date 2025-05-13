@@ -29,6 +29,7 @@ class ExerciseDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_workout_detail)
         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
         val userId = sharedPref.getInt("user_id", -1)
+        Log.d("DEBUG_DETAIL", "user_id từ SharedPreferences: $userId")
 
         // Ánh xạ view
         workoutImage = findViewById(R.id.workoutImage)
