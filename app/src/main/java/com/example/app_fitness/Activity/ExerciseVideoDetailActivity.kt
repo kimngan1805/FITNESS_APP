@@ -6,14 +6,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.app_fitness.Entity.ExerciseDetailRequest
-import com.example.app_fitness.Entity.ExerciseRequest
 import com.example.app_fitness.R
 import com.google.android.exoplayer2.util.Log
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.example.app_fitness.RestApi.RetrofitClient
-import com.example.app_fitness.Entity.MarkCompletedRequest // Import the data class
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

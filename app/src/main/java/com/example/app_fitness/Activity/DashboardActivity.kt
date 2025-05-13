@@ -41,7 +41,6 @@ class DashboardActivity : AppCompatActivity() {
 
         if (userId != -1) {
             loadLatestAddedExercise(userId)
-            loadNextTrainingExercises() // Gọi hàm này để lấy danh sách bài tập
 
 // Gọi load completed trước, rồi sau đó mới load bài tập tiếp theo
             loadCompletedExerciseIds {
@@ -97,7 +96,7 @@ class DashboardActivity : AppCompatActivity() {
                     }
 
                     R.id.add_workout -> {
-                        val intent = Intent(this@DashboardActivity, WorkoutPlanActivity::class.java)
+                        val intent = Intent(this@DashboardActivity, HistoryActivity::class.java)
                         startActivity(intent)
                         true
                     }
@@ -112,8 +111,13 @@ class DashboardActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (userId != -1) {
+            loadLatestAddedExercise(userId)
+            loadCompletedExerciseIds {
+                loadNextTrainingExercises()
+            }
         }
     }
+
 
 
 
@@ -247,15 +251,6 @@ class DashboardActivity : AppCompatActivity() {
             })
     }
 
-
-    private fun getLevelIdFromLevelString(level: String?): Int? {
-        return when (level?.toLowerCase(Locale.ROOT)) {
-            "beginner" -> 1
-            "intermediate" -> 2
-            "advanced" -> 3
-            else -> null
-        }
-    }
 
 
 }

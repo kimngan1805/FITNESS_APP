@@ -5,6 +5,7 @@ import com.example.app_fitness.Entity.CategoryRequest
 import com.example.app_fitness.Entity.Comment
 import com.example.app_fitness.Entity.DailyFoodItem
 import com.example.app_fitness.Entity.ExerciseDetailRequest
+import com.example.app_fitness.Entity.ExerciseHistoryItem
 import com.example.app_fitness.Entity.ExerciseRequest
 import com.example.app_fitness.Entity.FeedItem
 import com.example.app_fitness.Entity.FoodItem
@@ -159,4 +160,9 @@ interface ApiService {
     fun getUserAnalysis(@Query("user_id") userId: Int): Call<UserInfoRequest>
     @GET("get_calories_excercise.php")  // Đặt tên file PHP của bạn
     fun getCaloriesBurned(@Query("user_id") userId: Int): Call<CaloriesBurnedResponse>
+
+
+    @GET("get_exercise_history.php")
+    fun getExerciseHistory(@Query("user_id") userId: Int): Call<List<ExerciseHistoryItem>>
+
 }
