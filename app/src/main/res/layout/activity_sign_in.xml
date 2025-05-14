@@ -78,6 +78,7 @@
             android:layout_height="wrap_content"
             android:hint="Nhập mật khẩu"
             android:textColorHint="#CCCCCC"
+            android:inputType="textPassword"
             android:textColor="@android:color/white"
             android:background="@drawable/edit_text_border"
             android:padding="16dp"

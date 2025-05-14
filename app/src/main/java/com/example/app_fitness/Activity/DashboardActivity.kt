@@ -26,26 +26,21 @@ class DashboardActivity : AppCompatActivity() {
     private val nextTrainingExercises = mutableListOf<ExerciseDetailRequest>()
     private var completedExerciseIds: List<Int> = emptyList() // Danh sách ID bài tập đã hoàn thành
     private var userId: Int = -1
-    private var nextExercise: ExerciseDetailRequest? = null // Bài tập tiếp theo
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
         userId = sharedPref.getInt("user_id", -1)
-
         // Cấu hình RecyclerView cho "Next training"
         binding.nextTrainingRecyclerView.layoutManager = LinearLayoutManager(this)
 
         if (userId != -1) {
             loadLatestAddedExercise(userId)
-
-// Gọi load completed trước, rồi sau đó mới load bài tập tiếp theo
+// load completed trước,  sau đó  load bài tập
             loadCompletedExerciseIds {
                 loadNextTrainingExercises()
             }
-
         } else {
             binding.exerciseNameTextView.text = "Chưa đăng nhập"
             binding.workoutImageHeader.setImageResource(R.drawable.activity_hinh)
@@ -66,7 +61,7 @@ class DashboardActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
+// phần popup menu
         binding.menuButton.setOnClickListener { view ->
             val popupMenu = PopupMenu(this, view)
             popupMenu.menuInflater.inflate(R.menu.drawer_menu, popupMenu.menu)
@@ -84,7 +79,6 @@ class DashboardActivity : AppCompatActivity() {
                         startActivity(intent)
                         true
                     }
-
                     R.id.nav_sports_nutrition -> {
                         Toast.makeText(
                             this@DashboardActivity,
@@ -106,10 +100,9 @@ class DashboardActivity : AppCompatActivity() {
             popupMenu.show()
         }
 
-
-
+// phần bottom navigation menu
         val bottomNav = binding.bottomNavigation
-        bottomNav.selectedItemId = R.id.menu_workouts // <-- đánh dấu "Workouts" được chọn
+        bottomNav.selectedItemId = R.id.menu_workouts
 
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -142,7 +135,7 @@ class DashboardActivity : AppCompatActivity() {
         }
 
     }
-
+    // done bên video detail load lai trang
     override fun onResume() {
         super.onResume()
         if (userId != -1) {
@@ -153,9 +146,7 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-
-
-
+    // phần hiển thị tên với ảnh bài tập ở trên
     private fun loadLatestAddedExercise(userId: Int) {
         RetrofitClient.instance.getUserExercises(userId)
             .enqueue(object : Callback<List<AddedExercise>> {
@@ -191,6 +182,7 @@ class DashboardActivity : AppCompatActivity() {
             })
     }
 
+    // tải bài tập theo exercise_id được thêm
     private fun loadExerciseDetails(exerciseId: Int) {
         RetrofitClient.instance.getExerciseById(exerciseId)
             .enqueue(object : Callback<ExerciseRequest> {
@@ -225,6 +217,7 @@ class DashboardActivity : AppCompatActivity() {
             })
     }
 
+    // kiểm tra lấy bài tập đã hoàn thành nè
     private fun loadCompletedExerciseIds(onLoaded: () -> Unit) {
         RetrofitClient.instance.getCompletedExercises(userId)
             .enqueue(object : Callback<List<Int>> {
@@ -241,6 +234,7 @@ class DashboardActivity : AppCompatActivity() {
                 }
             })
     }
+    // phần này để xử lý chỗ next training cho các bài tập thuôc exercise_id tương ứng
     private fun loadNextTrainingExercises() {
         RetrofitClient.instance.getUserExercises(userId)
             .enqueue(object : Callback<List<AddedExercise>> {

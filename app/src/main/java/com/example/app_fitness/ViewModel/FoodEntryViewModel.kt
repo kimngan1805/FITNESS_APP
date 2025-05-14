@@ -1,10 +1,8 @@
 package com.example.app_fitness.ViewModel
-import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.app_fitness.Entity.DailyFoodItem
 import com.example.app_fitness.Entity.UserInfoRequest
@@ -13,10 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Date
-import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
-
-// Thay ViewModel bằng AndroidViewModel để có quyền truy cập vào Context
+// AndroidViewModel để có quyền truy cập vào Context
 class FoodEntryViewModel(application: Application) : AndroidViewModel(application) {
     val message = MutableLiveData<String>()
     val isLoading = MutableLiveData<Boolean>()
@@ -24,10 +20,10 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
     val dailyFoodList = MutableLiveData<List<DailyFoodItem>>()
     val predictedCalories = MutableLiveData<Double>()
     private var userInfoRequest: UserInfoRequest? = null
-    val caloriesNeeded = MutableLiveData<Double>()  // <-- dùng để hiển thị lên TextView
     val caloriesBurned = MutableLiveData<Double>()
-    // Lấy context từ application
     private val context: Context = application.applicationContext
+
+    // hàm này để lưu thực phẩm vào csdl
 
     fun saveFoodEntry(userId: Int, foodName: String, quantity: Int) {
         if (userId != -1 && foodName.isNotEmpty()) {
@@ -55,6 +51,8 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+
+    // hàm này để hiển thị calories thức ăn theo ngày
     fun fetchDailyFoodList(userId: Int, date: String) {
         isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
@@ -79,6 +77,7 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
+    // cái này là để tính calories theo csdl
     private fun calculateDailyCalories(foodList: List<DailyFoodItem>) {
         viewModelScope.launch(Dispatchers.IO) {
             var totalCalories = 0.0
@@ -109,7 +108,7 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
-
+// hàm này để hiển thị calories mà người dùng có thể tiêu trong 1 ngày nè bây
     fun fetchUserData() { // Không cần userId làm tham số nữa
         isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
@@ -167,6 +166,7 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
+    // tính calories dự đoán có thể tiêu thụ
 
     fun calculatePredictedCalories(
         weight: Float,
@@ -207,6 +207,13 @@ class FoodEntryViewModel(application: Application) : AndroidViewModel(applicatio
         Log.d("FoodEntryViewModel", "Final TDEE: $tdee")
         return tdee
     }
+
+
+
+
+    // hàm này đêt tính calories đốt cháy theo bài tập mà người dùng đã tập nè
+
+
     fun fetchCaloriesBurned(userId: Int) {
         Log.d("FoodEntryViewModel", "fetchCaloriesBurned called with userId: $userId") // Log userId
         isLoading.value = true

@@ -31,7 +31,7 @@ class DailyFoodListAdapter(private val dailyFoodList: MutableList<DailyFoodItem>
     override fun getItemCount() = dailyFoodList.size
 
     fun updateList(newList: List<DailyFoodItem>) {
-        dailyFoodList.clear() // Không cần ép kiểu nữa
+        dailyFoodList.clear()
         dailyFoodList.addAll(newList)
         notifyDataSetChanged()
     }

@@ -1,5 +1,4 @@
 package com.example.app_fitness.Activity
-// SignUpActivity.kt
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -46,8 +45,7 @@ class SignUpActivity : AppCompatActivity() {
             findViewById(R.id.password_strength) // TextView hiển thị độ mạnh mật khẩu
         emailErrorTextView = findViewById(R.id.emailErrorTextView) // TextView hiển thị lỗi email
         btnLogin = findViewById(R.id.button_signin)
-
-        // Lắng nghe sự thay đổi trong ô email để kiểm tra tính hợp lệ
+        // kiểm tra tính hợp lệ email
         emailEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 charSequence: CharSequence?,
@@ -56,7 +54,6 @@ class SignUpActivity : AppCompatActivity() {
                 count: Int
             ) {
             }
-
             override fun onTextChanged(
                 charSequence: CharSequence?,
                 start: Int,
@@ -79,7 +76,7 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Lắng nghe sự thay đổi trong ô mật khẩu để kiểm tra độ mạnh
+       //kiểm tra độ mạnh mật khẩu
         passwordEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 charSequence: CharSequence?,

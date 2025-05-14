@@ -22,7 +22,7 @@ class ExerciseDetailActivity : AppCompatActivity() {
     private lateinit var workoutNote: TextView
     private lateinit var workoutDay: TextView
     private lateinit var backButton: ImageButton
-    private var currentExerciseId: Int = -1 // Biến để lưu ID bài tập
+    private var currentExerciseId: Int = -1 //lưu ID bài tập
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,6 @@ class ExerciseDetailActivity : AppCompatActivity() {
         val userId = sharedPref.getInt("user_id", -1)
         Log.d("DEBUG_DETAIL", "user_id từ SharedPreferences: $userId")
 
-        // Ánh xạ view
         workoutImage = findViewById(R.id.workoutImage)
         workoutTitle = findViewById(R.id.workoutTitle)
         workoutDescription = findViewById(R.id.supplements)

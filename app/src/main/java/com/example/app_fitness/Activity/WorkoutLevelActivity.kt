@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_fitness.Adapter.WorkoutLevelAdapter
 import com.example.app_fitness.Entity.WorkoutLevel
-import com.example.app_fitness.MainActivity
 import com.example.app_fitness.R
 import com.example.app_fitness.RestApi.RetrofitClient
 import com.example.app_fitness.databinding.ActivityWorkoutLevelBinding
@@ -45,7 +44,6 @@ class WorkoutLevelActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.menu_workouts -> {
-                    // Đang ở trang này rồi
                     true
                 }
                 R.id.menu_feed -> {
@@ -83,7 +81,6 @@ class WorkoutLevelActivity : AppCompatActivity() {
                     val levels = response.body() ?: emptyList()
                     Log.d("WorkoutLevelActivity", "Levels response: $levels")
 
-                    // Kiểm tra log để đảm bảo dữ liệu level_id
                     levels.forEach {
                         Log.d("WorkoutLevelActivity", "Level: ${it.level_name}, ID: ${it.id}")
                     }

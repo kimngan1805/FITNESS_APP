@@ -165,6 +165,8 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
             }
         }
 
+
+
         calculateCaloriesButton.setOnClickListener {
             if (userId != -1) {
                 for (item in foodItems) {
@@ -207,15 +209,18 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
             }
         }
     }
-
+// cái này clo đồ ăn nha
     private fun fetchDailyFoodList() {
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         foodEntryViewModel.fetchDailyFoodList(userId, currentDate)
     }
+// cái này calo nên ăn nha
 
     private fun fetchUserData() {
         foodEntryViewModel.fetchUserData()
     }
+
+    // cái này để cái calories đã đốt cháy theo bài tập á
 
     private fun fetchCaloriesBurned() {
         if (userId != -1) {
@@ -227,7 +232,7 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
     }
 
 
-
+// cái này nhấn giữ adapter ra pop up nè
 
     override fun onItemLongClick(position: Int) {
         val popupMenu = PopupMenu(
@@ -253,7 +258,7 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
         }
         popupMenu.show()
     }
-
+// cái này chỉnh sửa nè
     private fun showEditDialog(position: Int) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Sửa món ăn")
@@ -276,6 +281,7 @@ class AnalysisActivity : AppCompatActivity(), FoodListAdapter.OnItemLongClickLis
         builder.show()
     }
 
+    // cái này để làm cái xoá trên cái adpater
     private fun showDeleteConfirmationDialog(position: Int) {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Bạn có chắc chắn muốn xóa món ăn này?")

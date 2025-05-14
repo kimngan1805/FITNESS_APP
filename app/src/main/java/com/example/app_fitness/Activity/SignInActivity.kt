@@ -11,7 +11,6 @@ import com.example.app_fitness.databinding.ActivitySignInBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignInBinding
@@ -35,7 +34,6 @@ class SignInActivity : AppCompatActivity() {
                 signIn(username, password)
             }
         }
-
         // Xử lý sự kiện khi nhấn nút Đăng ký từ LinearLayout đầu tiên
         binding.buttonSignup.setOnClickListener {
             // Điều hướng đến SignUpActivity
@@ -54,7 +52,6 @@ class SignInActivity : AppCompatActivity() {
     private fun signIn(username: String, password: String) {
         // Sử dụng RetrofitClient để lấy instance của ApiService
         val apiService = RetrofitClient.instance
-
         // Gọi API đăng nhập
         val call = apiService.signIn(username, password)
 
@@ -80,7 +77,7 @@ class SignInActivity : AppCompatActivity() {
                         intent.putExtra("age", age)  // Truyền dữ liệu age
                         // Ngay sau khi đăng nhập thành công:
                         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
-                        with(sharedPref.edit()) {
+                        with(sharedPref.edit()) {// lưu vào đem qua trang bên kia
                             putString("fullname", fullname)
                             putInt("user_id", userId ?: -1)
                             putInt("age", age ?: -1)

@@ -27,14 +27,10 @@ class CommentAdapter(private val commentList: List<Comment>) :
 
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         val currentItem = commentList[position]
-        holder.userName.text = currentItem.userName // Đảm bảo class Comment có trường userName
+        holder.userName.text = currentItem.userName
         holder.commentText.text = currentItem.commentText
         holder.createdAt.text = formatDate(currentItem.createdAt)
-        // Load avatar nếu có URL trong Comment entity
-        // Glide.with(holder.itemView.context)
-        //     .load(currentItem.userAvatarUrl)
-        //     .placeholder(R.drawable.ic_user)
-        //     .into(holder.userAvatar)
+
     }
 
     private fun formatDate(timestamp: String?): String {

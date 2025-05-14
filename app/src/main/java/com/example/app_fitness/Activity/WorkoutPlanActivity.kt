@@ -30,7 +30,7 @@ class WorkoutPlanActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        // Set up RecyclerView
+        // xử lý recyclie view  hiển tji bài tập với nhấn vào 1 item qua level
         binding.categoryRecyclerView.layoutManager = LinearLayoutManager(this)
         categoryAdapter = CategoryAdapter(categoryList) { category ->
             // Handle item click
@@ -40,16 +40,16 @@ class WorkoutPlanActivity : AppCompatActivity() {
         }
         binding.categoryRecyclerView.adapter = categoryAdapter
 
-        // Set up Spinner for gender selection
+        // xử lý phần dropdown cho giới tính
         val genderOptions = resources.getStringArray(R.array.gender_options)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, genderOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.genderSpinner.adapter = adapter
 
-        // Fetch categories for default gender ("Nữ")
+        // mặc định nữ
         fetchCategories("Nữ")
 
-        // Handle gender selection
+        //  xử lý load danh sách theo giới tính , gọi hàm fetch
         binding.genderSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedGender = genderOptions[position]
@@ -61,7 +61,7 @@ class WorkoutPlanActivity : AppCompatActivity() {
             }
         }
 
-
+// bottom menu (kệ đi)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
@@ -92,18 +92,19 @@ class WorkoutPlanActivity : AppCompatActivity() {
         }
     }
 
+    // lấy danh sách theo fiowis tính từ csdl bùm vào đây
     private fun fetchCategories(gender: String) {
         val apiService = RetrofitClient.instance
-        val call = apiService.getCategories(gender) // Pass gender to the API
+        val call = apiService.getCategories(gender)
 
         call.enqueue(object : Callback<List<CategoryRequest>> {
             override fun onResponse(call: Call<List<CategoryRequest>>, response: Response<List<CategoryRequest>>) {
                 if (response.isSuccessful) {
-                    // Filter categories based on the gender selected
                     val categories = response.body() ?: emptyList()
                     categoryList = categories.filter { it.gender == gender } // Filter by gender
                     categoryAdapter = CategoryAdapter(categoryList) { category ->
                         val selectedGender = binding.genderSpinner.selectedItem.toString()
+                        // click vào 1 plan tương ứng qua trang level
                         val intent = Intent(this@WorkoutPlanActivity, WorkoutLevelActivity::class.java)
                         intent.putExtra("gender", selectedGender)
                         startActivity(intent)

@@ -102,7 +102,6 @@
         <activity android:name=".Activity.CreateMeasurementActivity" />
         <activity android:name=".Activity.ExerciseVideoDetailActivity" />
 
-        <activity android:name=".Activity.WorkoutsTabActivity" />
         <activity
             android:name=".Activity.HandbookActivity"
             android:exported="true">

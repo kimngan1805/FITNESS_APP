@@ -23,18 +23,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:text="Category Name" />
 
-        <TextView
-            android:id="@+id/categoryDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textColor="#AAAAAA"
-            android:layout_marginTop="4dp"
-            android:text="Short description" />
+
 
     </LinearLayout>
 
