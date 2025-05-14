@@ -71,7 +71,7 @@ class SignInActivity : AppCompatActivity() {
                         Log.d("DEBUG_LOGIN", "user_id từ API: $userId")
 
                         // Chuyển tới màn hình chính hoặc màn hình khác sau khi đăng nhập thành công
-                        val intent = Intent(this@SignInActivity, WorkoutPlanActivity::class.java)
+                        val intent = Intent(this@SignInActivity, ReviewActivity::class.java)
 
                         intent.putExtra("fullname", fullname)  // Truyền dữ liệu fullname
                         intent.putExtra("age", age)  // Truyền dữ liệu age
