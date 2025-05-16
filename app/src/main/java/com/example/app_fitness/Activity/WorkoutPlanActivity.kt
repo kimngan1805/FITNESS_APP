@@ -2,17 +2,20 @@ package com.example.app_fitness.Activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_fitness.Adapter.CategoryAdapter
 import com.example.app_fitness.Entity.CategoryRequest
 import com.example.app_fitness.MainActivity
 import com.example.app_fitness.R
 import com.example.app_fitness.RestApi.RetrofitClient
+import com.example.app_fitness.Utils.GridSpacingItemDecoration
 import com.example.app_fitness.databinding.ActivityWorkoutPlanBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Call
@@ -96,8 +99,18 @@ class WorkoutPlanActivity : AppCompatActivity() {
     private fun fetchCategories(gender: String) {
         val apiService = RetrofitClient.instance
         val call = apiService.getCategories(gender)
-
+        binding.categoryRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        val spacingInDp = 8
+        val spacingInPx = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            spacingInDp.toFloat(),
+            resources.displayMetrics
+        ).toInt()
+        binding.categoryRecyclerView.addItemDecoration(
+            GridSpacingItemDecoration(2, spacingInPx, true)
+        )
         call.enqueue(object : Callback<List<CategoryRequest>> {
+
             override fun onResponse(call: Call<List<CategoryRequest>>, response: Response<List<CategoryRequest>>) {
                 if (response.isSuccessful) {
                     val categories = response.body() ?: emptyList()

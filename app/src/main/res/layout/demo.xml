@@ -47,32 +47,51 @@
             android:textColor="#212121"
             android:layout_marginTop="4dp" />
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/discoverExercisesCard"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/search_bar_background"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:gravity="center_vertical"
-            android:layout_marginTop="16dp">
+            app:cardElevation="2dp"
+            android:clickable="true"
+            android:focusable="true">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_search"
-                app:tint="#757575" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Search"
-                android:textSize="16sp"
-                android:textColor="#BDBDBD"
-                android:layout_marginStart="8dp" />
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_search"
+                    app:tint="#757575" />
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Khám phá bài tập riêng của bạn"
+                    android:textSize="16sp"
+                    android:textColor="#BDBDBD"
+                    android:layout_marginStart="8dp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_arrow"
+                    app:tint="#BDBDBD" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

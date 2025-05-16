@@ -142,7 +142,7 @@
         </activity>
         <activity android:name=".Activity.HistoryActivity" />
         <activity
-            android:name=".Activity.DemoActivity"
+            android:name=".Activity.SuggestActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
