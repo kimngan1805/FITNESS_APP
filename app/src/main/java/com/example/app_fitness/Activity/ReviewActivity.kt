@@ -23,10 +23,11 @@ class ReviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
+        val fullname = sharedPref.getString("fullname", "Người dùng")
         val todayPlanRecyclerView = binding.todayPlanRecyclerView
         todayPlanRecyclerView.layoutManager = LinearLayoutManager(this)
-
+        binding.hellouser.text = "Chào, $fullname 👋"
         horizontalScrollView = binding.horizontalScrollView
 
         val todayPlanItems = listOf(

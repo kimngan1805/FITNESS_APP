@@ -165,5 +165,7 @@ interface ApiService {
 
     @GET("get_exercise_history.php")
     fun getExerciseHistory(@Query("user_id") userId: Int): Call<List<ExerciseHistoryItem>>
+    @GET("exercise/random")
+    suspend fun getRandomExercises(): List<ExerciseRequest>
 
 }
