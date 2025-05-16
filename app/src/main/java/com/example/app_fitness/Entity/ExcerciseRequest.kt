@@ -24,7 +24,8 @@ data class ExerciseRequest(
     @SerializedName("image_url")
     val image_url: String,
     val unlock_order: Int,
-    val detail_name: String,
     val muscle_group: String,
-    val time:Int
+    val time:String,
+    val level: String,
+    val progress: Int
 ): Parcelable

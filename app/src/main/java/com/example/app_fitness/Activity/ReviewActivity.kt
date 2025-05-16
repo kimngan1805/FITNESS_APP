@@ -4,31 +4,46 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.HorizontalScrollView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.app_fitness.Adapter.ReviewAdapter
 import com.example.app_fitness.Adapter.TodayPlanAdapter
 import com.example.app_fitness.Entity.TodayPlanItem
 import com.example.app_fitness.databinding.DemoBinding
 import com.example.app_fitness.R // Import R
+import com.example.app_fitness.RestApi.RetrofitClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.launch
 
 class ReviewActivity : AppCompatActivity() {
 
     private lateinit var binding: DemoBinding
-    private lateinit var horizontalScrollView: HorizontalScrollView
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var bottomNavigationView: BottomNavigationView // Added for Bottom Navigation
+    private var currentPosition = 0
+    private var userId: Int = -1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DemoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
         val fullname = sharedPref.getString("fullname", "Người dùng")
+
+        userId = sharedPref.getInt("user_id", -1)  // Gán biến toàn cục
+
+        if (userId == -1) {
+            Log.e("User", "UserId not found in SharedPreferences")
+            // Có thể xử lý điều hướng sang đăng nhập
+        }
+
+
         val todayPlanRecyclerView = binding.todayPlanRecyclerView
         todayPlanRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.hellouser.text = "Chào, $fullname 👋"
-        horizontalScrollView = binding.horizontalScrollView
 
         val todayPlanItems = listOf(
             TodayPlanItem(
@@ -61,8 +76,8 @@ class ReviewActivity : AppCompatActivity() {
             // Thêm các item khác cho "Today Plan"
         )
 
-        val todayPlanAdapter = TodayPlanAdapter(todayPlanItems)
-        todayPlanRecyclerView.adapter = todayPlanAdapter
+//        val todayPlanAdapter = TodayPlanAdapter(todayPlanItems)
+//        todayPlanRecyclerView.adapter = todayPlanAdapter
 
 
         bottomNavigationView = binding.bottomNavigationView
@@ -97,33 +112,53 @@ class ReviewActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        loadExercises()
+        loadExercisesToday()  // Gọi hàm sử dụng biến userId toàn cục
+
     }
-
-    private val scrollRunnable = object : Runnable {
-        override fun run() {
-            val currentX = horizontalScrollView.scrollX
-            val childWidth = horizontalScrollView.getChildAt(0)?.width ?: 0
-            val scrollViewWidth = horizontalScrollView.width
-
-            if (childWidth > scrollViewWidth) {
-                val nextScrollX = if (currentX + scrollViewWidth < childWidth) {
-                    currentX + scrollViewWidth
-                } else {
-                    0 // Scroll back to the beginning
-                }
-                horizontalScrollView.smoothScrollTo(nextScrollX, 0)
-                handler.postDelayed(this, 2000) // Scroll every 2 seconds
+    private fun loadExercisesToday() {
+        lifecycleScope.launch {
+            try {
+                val exercises = RetrofitClient.instance.getUserExercisesToday(userId)  // userId lấy từ SharedPreferences hoặc Intent
+                val adapter = TodayPlanAdapter(exercises)
+                binding.todayPlanRecyclerView.layoutManager = LinearLayoutManager(this@ReviewActivity)
+                binding.todayPlanRecyclerView.adapter = adapter
+            } catch (e: Exception) {
+                Log.e("API", "Error fetching exercises today", e)
             }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        handler.postDelayed(scrollRunnable, 2000) // Start auto scroll when activity resumes
+
+    private fun loadExercises() {
+        lifecycleScope.launch {
+            try {
+                val exercises = RetrofitClient.instance.getRandomExercises()
+                val adapter = ReviewAdapter(exercises)
+                binding.reviewRecyclerView.layoutManager =
+                    LinearLayoutManager(this@ReviewActivity, LinearLayoutManager.HORIZONTAL, false)
+                binding.reviewRecyclerView.adapter = adapter
+
+                // Auto scroll
+                val handler = Handler(Looper.getMainLooper())
+                val runnable = object : Runnable {
+                    override fun run() {
+                        if (currentPosition == exercises.size) {
+                            currentPosition = 0
+                        }
+                        binding.reviewRecyclerView.smoothScrollToPosition(currentPosition)
+                        currentPosition++
+                        handler.postDelayed(this, 2000) // 2 giây
+                    }
+                }
+                handler.postDelayed(runnable, 2000)
+
+                // Lưu handler và runnable nếu cần dừng lại trong onDestroy()
+            } catch (e: Exception) {
+                Log.e("API", "Error fetching exercises", e)
+            }
+        }
     }
 
-    override fun onPause() {
-        super.onPause()
-        handler.removeCallbacks(scrollRunnable) // Stop auto scroll when activity pauses
-    }
 }

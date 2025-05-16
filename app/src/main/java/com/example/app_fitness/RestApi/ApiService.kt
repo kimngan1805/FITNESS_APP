@@ -165,7 +165,11 @@ interface ApiService {
 
     @GET("get_exercise_history.php")
     fun getExerciseHistory(@Query("user_id") userId: Int): Call<List<ExerciseHistoryItem>>
-    @GET("exercise/random")
+    @GET("getRandomExercises.php")
     suspend fun getRandomExercises(): List<ExerciseRequest>
+    @GET("get_exercise_today.php")
+    suspend fun getUserExercisesToday(@Query("user_id") userId: Int): List<ExerciseRequest>
+    @GET("get_progress.php")
+    suspend fun getUserExercisesProgressToday(@Query("user_id") userId: Int): List<ExerciseRequest>
 
 }
