@@ -19,6 +19,7 @@ class WorkoutLevelAdapter(
         val levelImage: ImageView = itemView.findViewById(R.id.levelImage)
         val levelName: TextView = itemView.findViewById(R.id.levelName)
         val levelDescription: TextView = itemView.findViewById(R.id.levelDescription)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkoutLevelViewHolder {

@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Select your workout plan"
+                    android:text="Chọn mục tiêu bạn muốn luyện tập nào "
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />

@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.app_fitness.Adapter.WorkoutLevelAdapter
 import com.example.app_fitness.Entity.WorkoutLevel
 import com.example.app_fitness.R
@@ -19,6 +21,7 @@ class WorkoutLevelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWorkoutLevelBinding
     private lateinit var workoutLevelAdapter: WorkoutLevelAdapter
     private var workoutLevels: List<WorkoutLevel> = emptyList()
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +32,7 @@ class WorkoutLevelActivity : AppCompatActivity() {
         Log.d("WorkoutLevelActivity", "Gender received: $gender")
 
         // Setup RecyclerView
-        binding.workoutRecyclerView.layoutManager = LinearLayoutManager(this)
-
+        binding.workoutRecyclerView.layoutManager = GridLayoutManager(this, 2)
         // Gọi API lấy danh sách level theo gender
         fetchWorkoutLevels(gender)
 

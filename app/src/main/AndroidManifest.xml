@@ -88,7 +88,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.ProfileActivity" />
+        <activity
+            android:name=".Activity.ProfileActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activity.ActivityEditProfile"
             android:exported="true">
@@ -151,7 +159,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.ReviewActivity" />
+        <activity
+            android:name=".Activity.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -1,93 +1,343 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#F8F3ED">
 
-    <!-- Ảnh nền -->
-    <ImageView
-        android:id="@+id/imageWorkout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/excercise_image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/textTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- Tiêu đề chính -->
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Wherever You Are\n"
-        android:textColor="#000000"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/imageWorkout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:padding="16dp">
 
-    <!-- Dòng thứ hai, có chữ Health bôi đậm màu xanh -->
-    <TextView
-        android:id="@+id/textSubtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Health Is Number One"
-        android:textColor="#000000"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/textTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Mô tả phụ -->
-    <TextView
-        android:id="@+id/textDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="There is no instant way to a healthy life"
-        android:textColor="#888888"
-        android:textSize="14sp"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/textSubtitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow"
+                android:contentDescription="Back" />
 
-    <!-- Thanh trạng thái (gồm progress bar custom dạng màu xanh và đen) -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="80dp"
-        android:layout_height="6dp"
-        android:progress="50"
-        android:progressTint="#A0E702"
-        android:backgroundTint="#202020"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/textDescription"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Profile"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="16dp" />
 
-    <!-- Nút Get Started -->
-    <Button
-        android:id="@+id/getStartedButton"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:text="Get Started"
-        android:textColor="@color/black"
-        android:backgroundTint="#111518"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/rounded_border_black"
-        app:layout_constraintTop_toBottomOf="@id/progressBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginHorizontal="32dp"/>
+            <Button
+                android:id="@+id/editProfileButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit Profile"
+                android:textSize="14sp"
+                android:textColor="#FF8C00"
+                android:background="@drawable/rounded_border_orange"
+                android:layout_gravity="end" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profileImageCardView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:cardCornerRadius="50dp"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp">
+
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_user_profile"
+                android:contentDescription="Profile Image" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_camera"
+                android:background="@drawable/circle_background_white"
+                android:layout_gravity="bottom|end"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
+                android:contentDescription="Edit Profile Picture" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/nameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toBottomOf="@id/profileImageCardView"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="24dp" />
+
+        <TextView
+            android:id="@+id/nameValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Anjani"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            app:layout_constraintTop_toBottomOf="@id/nameLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
+
+        <TextView
+            android:id="@+id/emailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email ID"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toBottomOf="@id/nameValue"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/emailValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            app:layout_constraintTop_toBottomOf="@id/emailLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
+
+        <TextView
+            android:id="@+id/mobileLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mobile Number"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toBottomOf="@id/emailValue"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/mobileValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="+91 888 888 888"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            app:layout_constraintTop_toBottomOf="@id/mobileLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
+
+        <TextView
+            android:id="@+id/genderLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toBottomOf="@id/mobileValue"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/genderValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Female"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            app:layout_constraintTop_toBottomOf="@id/genderLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
+
+        <TextView
+            android:id="@+id/dobLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DOB"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toBottomOf="@id/genderValue"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/dobValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="23-04-2001"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            app:layout_constraintTop_toBottomOf="@id/dobLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
+
+        <TextView
+            android:id="@+id/cityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="City"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toBottomOf="@id/dobValue"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/cityValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            app:layout_constraintTop_toBottomOf="@id/cityLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
+
+        <TextView
+            android:id="@+id/stateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="State"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toBottomOf="@id/cityValue"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/stateValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textSize="16sp"
+            android:textColor="#212121"
+            app:layout_constraintTop_toBottomOf="@id/stateLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
+
+        <TextView
+            android:id="@+id/heightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Height"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toBottomOf="@id/stateValue"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:id="@+id/heightLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/heightLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/rounded_border_light_gray">
+
+            <TextView
+                android:id="@+id/heightValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="5'6"
+                android:textSize="16sp"
+                android:textColor="#212121"
+                android:paddingVertical="8dp"
+                android:paddingStart="12dp" />
+
+            <TextView
+                android:id="@+id/heightUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CM | FT"
+                android:textSize="14sp"
+                android:textColor="#FF8C00"
+                android:paddingVertical="8dp"
+                android:paddingEnd="12dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/weightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weight"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            app:layout_constraintTop_toBottomOf="@id/heightLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:id="@+id/weightLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/weightLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/rounded_border_light_gray">
+
+            <TextView
+                android:id="@+id/weightValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="58"
+                android:textSize="16sp"
+                android:textColor="#212121"
+                android:paddingVertical="8dp"
+                android:paddingStart="12dp" />
+
+            <TextView
+                android:id="@+id/weightUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KG | LB"
+                android:textSize="14sp"
+                android:textColor="#FF8C00"
+                android:paddingVertical="8dp"
+                android:paddingEnd="12dp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
