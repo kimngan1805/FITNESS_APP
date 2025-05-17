@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app_fitness.Activity.SignInActivity
+import com.example.app_fitness.Activity.SignUpActivity
 import com.example.app_fitness.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         // Set lắng nghe sự kiện nút "Bắt đầu ngay"
         binding.getStartedButton.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
+        }
+        binding.textLoginPrompt.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }

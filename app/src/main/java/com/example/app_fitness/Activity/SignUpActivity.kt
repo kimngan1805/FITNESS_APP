@@ -72,7 +72,7 @@ class SignUpActivity : AppCompatActivity() {
             override fun afterTextChanged(editable: Editable?) {}
         })
         btnLogin.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
+            val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
 

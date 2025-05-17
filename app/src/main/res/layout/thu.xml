@@ -1,6 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Ảnh nền -->
+    <ImageView
+        android:id="@+id/imageWorkout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/excercise_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Tiêu đề chính -->
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Wherever You Are\n"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/imageWorkout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Dòng thứ hai, có chữ Health bôi đậm màu xanh -->
+    <TextView
+        android:id="@+id/textSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Health Is Number One"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/textTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Mô tả phụ -->
+    <TextView
+        android:id="@+id/textDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="There is no instant way to a healthy life"
+        android:textColor="#888888"
+        android:textSize="14sp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/textSubtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Thanh trạng thái (gồm progress bar custom dạng màu xanh và đen) -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="80dp"
+        android:layout_height="6dp"
+        android:progress="50"
+        android:progressTint="#A0E702"
+        android:backgroundTint="#202020"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/textDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Nút Get Started -->
+    <Button
+        android:id="@+id/getStartedButton"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:text="Get Started"
+        android:textColor="@color/black"
+        android:backgroundTint="#111518"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_border_black"
+        app:layout_constraintTop_toBottomOf="@id/progressBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="32dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

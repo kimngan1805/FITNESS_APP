@@ -6,4 +6,7 @@
     <color name="blue">#00BCD4</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="pink_200">#E91E63</color>
+    <color name="dark_background">#2C2C2E</color>
+    <color name="green">#8BC34A</color>
+    <color name="orange">#FF9800</color>
 </resources>

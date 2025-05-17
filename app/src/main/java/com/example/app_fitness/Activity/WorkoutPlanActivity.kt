@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.app_fitness.Adapter.CategoryAdapter
 import com.example.app_fitness.Entity.CategoryRequest
-import com.example.app_fitness.MainActivity
 import com.example.app_fitness.R
 import com.example.app_fitness.RestApi.RetrofitClient
 import com.example.app_fitness.Utils.GridSpacingItemDecoration
@@ -51,7 +50,6 @@ class WorkoutPlanActivity : AppCompatActivity() {
 
         // mặc định nữ
         fetchCategories("Nữ")
-
         //  xử lý load danh sách theo giới tính , gọi hàm fetch
         binding.genderSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parentView: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -94,7 +92,6 @@ class WorkoutPlanActivity : AppCompatActivity() {
             }
         }
     }
-
     // lấy danh sách theo fiowis tính từ csdl bùm vào đây
     private fun fetchCategories(gender: String) {
         val apiService = RetrofitClient.instance
