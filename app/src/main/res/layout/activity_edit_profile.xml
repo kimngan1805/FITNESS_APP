@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F3ED">
@@ -10,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -30,7 +28,7 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit Profile"
+                android:text="Edit My Profile"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginStart="16dp" />
@@ -79,19 +77,18 @@
             android:layout_marginTop="24dp" />
 
         <EditText
-            android:id="@+id/nameEditText"
+            android:id="@+id/nameValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Anjani Pandit"
+            android:text="Anjani"
             android:textSize="16sp"
             android:textColor="#212121"
-            android:paddingVertical="8dp"
-            android:paddingStart="12dp"
-            android:background="@drawable/rounded_border_light_gray"
-            android:inputType="textPersonName"
             app:layout_constraintTop_toBottomOf="@id/nameLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
 
         <TextView
             android:id="@+id/emailLabel"
@@ -100,24 +97,23 @@
             android:text="Email ID"
             android:textSize="14sp"
             android:textColor="#757575"
-            app:layout_constraintTop_toBottomOf="@id/nameEditText"
+            app:layout_constraintTop_toBottomOf="@id/nameValue"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
         <EditText
-            android:id="@+id/emailEditText"
+            android:id="@+id/emailValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="abc@gmail.com"
+            android:text="--"
             android:textSize="16sp"
             android:textColor="#212121"
-            android:paddingVertical="8dp"
-            android:paddingStart="12dp"
-            android:background="@drawable/rounded_border_light_gray"
-            android:inputType="textEmailAddress"
             app:layout_constraintTop_toBottomOf="@id/emailLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
 
         <TextView
             android:id="@+id/mobileLabel"
@@ -126,24 +122,22 @@
             android:text="Mobile Number"
             android:textSize="14sp"
             android:textColor="#757575"
-            app:layout_constraintTop_toBottomOf="@id/emailEditText"
+            app:layout_constraintTop_toBottomOf="@id/emailValue"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
         <EditText
-            android:id="@+id/mobileEditText"
+            android:id="@+id/mobileValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="+91 888 888 888"
+            android:text="+91 888 888 888"
             android:textSize="16sp"
             android:textColor="#212121"
-            android:paddingVertical="8dp"
-            android:paddingStart="12dp"
-            android:background="@drawable/rounded_border_light_gray"
-            android:inputType="phone"
             app:layout_constraintTop_toBottomOf="@id/mobileLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
 
         <TextView
             android:id="@+id/genderLabel"
@@ -152,100 +146,98 @@
             android:text="Gender"
             android:textSize="14sp"
             android:textColor="#757575"
-            app:layout_constraintTop_toBottomOf="@id/mobileEditText"
+            app:layout_constraintTop_toBottomOf="@id/mobileValue"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
-        <Spinner
-            android:id="@+id/genderSpinner"
+        <EditText
+            android:id="@+id/genderValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="Female"
             android:textSize="16sp"
             android:textColor="#212121"
-            android:paddingVertical="8dp"
-            android:paddingStart="12dp"
-            android:background="@drawable/rounded_border_light_gray"
             app:layout_constraintTop_toBottomOf="@id/genderLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
 
         <TextView
-            android:id="@+id/dobLabel"
+            android:id="@+id/workoutLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DOB"
+            android:text="Mức độ tập luyện"
             android:textSize="14sp"
             android:textColor="#757575"
-            app:layout_constraintTop_toBottomOf="@id/genderSpinner"
+            app:layout_constraintTop_toBottomOf="@id/genderValue"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
         <EditText
-            android:id="@+id/dobEditText"
+            android:id="@+id/workoutValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="23-04-2001"
+            android:text=" --"
             android:textSize="16sp"
             android:textColor="#212121"
-            android:paddingVertical="8dp"
-            android:paddingStart="12dp"
-            android:background="@drawable/rounded_border_light_gray"
-            android:inputType="date"
-            app:layout_constraintTop_toBottomOf="@id/dobLabel"
+            app:layout_constraintTop_toBottomOf="@id/workoutLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
 
         <TextView
-            android:id="@+id/cityLabel"
+            android:id="@+id/medicalLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="City"
+            android:text="Tình trạng bệnh"
             android:textSize="14sp"
             android:textColor="#757575"
-            app:layout_constraintTop_toBottomOf="@id/dobEditText"
+            app:layout_constraintTop_toBottomOf="@id/workoutValue"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
         <EditText
-            android:id="@+id/cityEditText"
+            android:id="@+id/medicalValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Faridabad"
+            android:text="--"
             android:textSize="16sp"
             android:textColor="#212121"
-            android:paddingVertical="8dp"
-            android:paddingStart="12dp"
-            android:background="@drawable/rounded_border_light_gray"
-            android:inputType="textPostalAddress"
-            app:layout_constraintTop_toBottomOf="@id/cityLabel"
+            app:layout_constraintTop_toBottomOf="@id/medicalLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
 
         <TextView
-            android:id="@+id/stateLabel"
+            android:id="@+id/improvementLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="State"
+            android:text="Mục tiêu tập luyện"
             android:textSize="14sp"
             android:textColor="#757575"
-            app:layout_constraintTop_toBottomOf="@id/cityEditText"
+            app:layout_constraintTop_toBottomOf="@id/medicalValue"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
         <EditText
-            android:id="@+id/stateEditText"
+            android:id="@+id/improvementValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Haryana"
+            android:text="--"
             android:textSize="16sp"
             android:textColor="#212121"
-            android:paddingVertical="8dp"
-            android:paddingStart="12dp"
-            android:background="@drawable/rounded_border_light_gray"
-            android:inputType="textPostalAddress"
-            app:layout_constraintTop_toBottomOf="@id/stateLabel"
+            app:layout_constraintTop_toBottomOf="@id/improvementLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="8dp"
+            android:background="@drawable/rounded_border_light_gray"
+            android:paddingStart="12dp" />
 
         <TextView
             android:id="@+id/heightLabel"
@@ -254,7 +246,7 @@
             android:text="Height"
             android:textSize="14sp"
             android:textColor="#757575"
-            app:layout_constraintTop_toBottomOf="@id/stateEditText"
+            app:layout_constraintTop_toBottomOf="@id/improvementValue"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
@@ -269,16 +261,15 @@
             android:background="@drawable/rounded_border_light_gray">
 
             <EditText
-                android:id="@+id/heightEditText"
+                android:id="@+id/heightValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="170"
+                android:text="5'6"
                 android:textSize="16sp"
                 android:textColor="#212121"
                 android:paddingVertical="8dp"
-                android:paddingStart="12dp"
-                android:inputType="number" />
+                android:paddingStart="12dp" />
 
             <TextView
                 android:id="@+id/heightUnit"
@@ -314,16 +305,15 @@
             android:background="@drawable/rounded_border_light_gray">
 
             <EditText
-                android:id="@+id/weightEditText"
+                android:id="@+id/weightValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="58"
+                android:text="58"
                 android:textSize="16sp"
                 android:textColor="#212121"
                 android:paddingVertical="8dp"
-                android:paddingStart="12dp"
-                android:inputType="number" />
+                android:paddingStart="12dp" />
 
             <TextView
                 android:id="@+id/weightUnit"
@@ -336,14 +326,13 @@
                 android:paddingEnd="12dp" />
 
         </LinearLayout>
-
         <Button
-            android:id="@+id/saveChangesButton"
+            android:id="@+id/saveButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Save Changes"
+            android:text="Lưu lại"
             android:textSize="18sp"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:background="@drawable/rounded_border_orange"
             android:layout_marginTop="32dp"
             app:layout_constraintTop_toBottomOf="@id/weightLayout"

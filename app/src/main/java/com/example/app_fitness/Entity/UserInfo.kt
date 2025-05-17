@@ -4,15 +4,18 @@ import com.google.gson.annotations.SerializedName
 
 
 data class UserInfo(
-    val id: Int,
-    @SerializedName("userId")  // Ánh xạ "userId" từ JSON sang user_id
-    val user_id: Int,
-    val weight: Float,
-    val height: Float,
-    val age: Int,
-    val medical_condition: String,
-    val workout_level: String,
-    val improvement_goal: String,
+    @SerializedName("user_id")
+    val userId: Int,
+    @SerializedName("fullname")
+    val fullname: String,
+    val email: String,
     val gender: String,
-    val email: String
+    @SerializedName("workout_level")
+    val workoutLevel: String,
+    @SerializedName("medical_condition")
+    val medicalCondition: String,
+    @SerializedName("improvement_goal")
+    val improvementGoal: String,
+    val weight: Float,
+    val height: Float
 )

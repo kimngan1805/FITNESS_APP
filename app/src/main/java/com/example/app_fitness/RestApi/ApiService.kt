@@ -173,5 +173,7 @@ interface ApiService {
     @GET("get_user_profile.php")
     suspend fun getUserProfile(@Query("user_id") userId: Int): UserInfo
 
+    @POST("update_user_profile.php")
+    fun updateUserProfile(@Body request: UserInfo): Call<UpdateUserResponse>
 
 }

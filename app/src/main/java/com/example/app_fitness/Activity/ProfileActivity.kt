@@ -1,16 +1,10 @@
 package com.example.app_fitness.Activity
 
-import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.app_fitness.R
@@ -40,6 +34,33 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, ActivityEditProfile::class.java)
             startActivity(intent)
         }
+        binding.toolbar.findViewById<Button>(R.id.editProfileButton).setOnClickListener {
+            val sharedPref = getSharedPreferences("UserData", MODE_PRIVATE)
+            val fullname = sharedPref.getString("fullname", "")
+            val age = sharedPref.getInt("age", -1)
+            val userId = sharedPref.getInt("user_id", -1)
+
+            val email = binding.emailValue.text.toString()
+            val weight = binding.weightValue.text.toString()
+            val height = binding.heightValue.text.toString()
+            val gender = binding.genderValue.text.toString()
+            val workout = binding.workoutValue.text.toString()
+            val medical = binding.medicalValue.text.toString()
+            val improvement = binding.improvementValue.text.toString()
+
+            val intent = Intent(this, ActivityEditProfile::class.java).apply {
+                putExtra("fullname", fullname)
+                putExtra("email", email)
+                putExtra("weight", weight)
+                putExtra("height", height)
+                putExtra("gender", gender)
+                putExtra("workout", workout)
+                putExtra("medical", medical)
+                putExtra("improvement", improvement)
+            }
+            startActivity(intent)
+        }
+
     }
 
     private fun loadProfileData() {
@@ -58,9 +79,9 @@ class ProfileActivity : AppCompatActivity() {
                 binding.weightValue.text = "${userProfile.weight} kg"
                 binding.heightValue.text = "${userProfile.height} cm"
                 binding.genderValue.text = userProfile.gender
-                binding.workoutValue.text = userProfile.workout_level
-                binding.medicalValue.text = userProfile.medical_condition
-                binding.improvementValue.text = userProfile.improvement_goal
+                binding.workoutValue.text = userProfile.workoutLevel
+                binding.medicalValue.text = userProfile.medicalCondition
+                binding.improvementValue.text = userProfile.improvementGoal
 
             } catch (e: Exception) {
                 Log.e("Profile", "Error: ${e.message}")
