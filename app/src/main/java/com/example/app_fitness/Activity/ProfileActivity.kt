@@ -12,8 +12,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.app_fitness.R
+import com.example.app_fitness.RestApi.RetrofitClient.instance
 import com.example.app_fitness.databinding.ActivityProfileBinding
+import kotlinx.coroutines.launch
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
@@ -46,18 +49,23 @@ class ProfileActivity : AppCompatActivity() {
         val age = sharedPref.getInt("age", -1)
         val userId = sharedPref.getInt("user_id", -1)
 
-        // Gán tên ra giao diện
-        binding.nameValue.text = fullname ?: "Không rõ"
-        binding.emailValue.text = "ngan@example.com"
-        binding.mobileValue.text = "+84 987 654 321"
-        binding.genderValue.text = "Nữ"
-        binding.dobValue.text = "17-05-2001"
-        binding.medicalValue.text = "Hồ Chí Minh"
-        binding.improvementValue.text = "Việt Nam"
-        binding.heightValue.text = "160"
-        binding.heightUnit.text = "CM"
-        binding.weightValue.text = "50"
-        binding.weightUnit.text = "KG"
+        lifecycleScope.launch {
+            try {
+                val userProfile = instance.getUserProfile(userId)
+                binding.nameValue.text= fullname
+                // Cập nhật UI
+                binding.emailValue.text = userProfile.email
+                binding.weightValue.text = "${userProfile.weight} kg"
+                binding.heightValue.text = "${userProfile.height} cm"
+                binding.genderValue.text = userProfile.gender
+                binding.workoutValue.text = userProfile.workout_level
+                binding.medicalValue.text = userProfile.medical_condition
+                binding.improvementValue.text = userProfile.improvement_goal
+
+            } catch (e: Exception) {
+                Log.e("Profile", "Error: ${e.message}")
+            }
+        }
 
         // Nếu có ảnh đại diện
         binding.profileImageView.setImageResource(R.drawable.ic_user_profile) // hoặc load từ URL bằng Glide

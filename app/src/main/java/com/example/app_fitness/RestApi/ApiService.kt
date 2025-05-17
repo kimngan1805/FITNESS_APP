@@ -11,6 +11,7 @@ import com.example.app_fitness.Entity.FeedItem
 import com.example.app_fitness.Entity.FoodItem
 import com.example.app_fitness.Entity.MarkCompletedRequest
 import com.example.app_fitness.Entity.UserData
+import com.example.app_fitness.Entity.UserInfo
 import com.example.app_fitness.Entity.UserInfoRequest
 import com.example.app_fitness.Entity.WorkoutLevel
 import com.example.app_fitness.Response.CaloriesBurnedResponse
@@ -169,7 +170,8 @@ interface ApiService {
     suspend fun getRandomExercises(): List<ExerciseRequest>
     @GET("get_exercise_today.php")
     suspend fun getUserExercisesToday(@Query("user_id") userId: Int): List<ExerciseRequest>
-    @GET("get_progress.php")
-    suspend fun getUserExercisesProgressToday(@Query("user_id") userId: Int): List<ExerciseRequest>
+    @GET("get_user_profile.php")
+    suspend fun getUserProfile(@Query("user_id") userId: Int): UserInfo
+
 
 }

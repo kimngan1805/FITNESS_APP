@@ -175,10 +175,10 @@
             android:paddingStart="12dp" />
 
         <TextView
-            android:id="@+id/dobLabel"
+            android:id="@+id/workoutLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DOB"
+            android:text="Mức độ tập luyện"
             android:textSize="14sp"
             android:textColor="#757575"
             app:layout_constraintTop_toBottomOf="@id/genderValue"
@@ -186,13 +186,13 @@
             android:layout_marginTop="16dp" />
 
         <TextView
-            android:id="@+id/dobValue"
+            android:id="@+id/workoutValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="23-04-2001"
+            android:text=" --"
             android:textSize="16sp"
             android:textColor="#212121"
-            app:layout_constraintTop_toBottomOf="@id/dobLabel"
+            app:layout_constraintTop_toBottomOf="@id/workoutLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:paddingVertical="8dp"
@@ -206,7 +206,7 @@
             android:text="Tình trạng bệnh"
             android:textSize="14sp"
             android:textColor="#757575"
-            app:layout_constraintTop_toBottomOf="@id/dobValue"
+            app:layout_constraintTop_toBottomOf="@id/workoutValue"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
@@ -228,7 +228,7 @@
             android:id="@+id/improvementLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="State"
+            android:text="Mục tiêu tập luyện"
             android:textSize="14sp"
             android:textColor="#757575"
             app:layout_constraintTop_toBottomOf="@id/medicalValue"
