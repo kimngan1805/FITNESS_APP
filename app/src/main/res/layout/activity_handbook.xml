@@ -33,33 +33,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_marginTop="15dp"
-
-                android:id="@+id/exercises_item"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/handbook_item_rounded"
-                android:layout_marginBottom="12dp">
-
-                <ImageView
-                    android:background="@drawable/excercise_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:alpha="0.7" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:text="Exercises"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_marginTop="15dp"
@@ -82,7 +55,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:text="Sports nutrition"
+                    android:text="Protein"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -109,40 +82,11 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:text="List of ingredients and calorie count"
+                    android:text="Thực phẩm"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_marginTop="15dp"
-                android:id="@+id/pharmacology_item"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/handbook_item_rounded"
-                android:layout_marginBottom="12dp">
-
-                <ImageView
-                    android:background="@drawable/pharmacology_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:alpha="0.7" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="16dp"
-                    android:text="Pharmacology"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
             <RelativeLayout
                 android:layout_marginTop="15dp"
                 android:id="@+id/encyclopedia_item"
@@ -163,7 +107,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:text="Encyclopedia"
+                    android:text="Hoạt động tốt"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />

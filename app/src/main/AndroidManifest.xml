@@ -109,6 +109,7 @@
         <activity android:name=".Activity.MesuareActivity" />
         <activity android:name=".Activity.CreateMeasurementActivity" />
         <activity android:name=".Activity.ExerciseVideoDetailActivity" />
+        <activity android:name=".Activity.ProteinActivity" />
 
         <activity
             android:name=".Activity.HandbookActivity"

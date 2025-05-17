@@ -16,21 +16,15 @@ class HandbookActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.bottomNavigationView.selectedItemId = R.id.menu_handbook
 
-        // Bạn có thể thêm logic xử lý sự kiện click cho các item tại đây
-        binding.exercisesItem.setOnClickListener {
-            // Xử lý khi click vào mục Exercises
-        }
 
         binding.sportsNutritionItem.setOnClickListener {
-            // Xử lý khi click vào mục Sports nutrition
+            val intent = Intent(this, ProteinActivity::class.java)
+            startActivity(intent)
         }
+
 
         binding.ingredientsCalorieItem.setOnClickListener {
             // Xử lý khi click vào mục List of ingredients and calorie count
-        }
-
-        binding.pharmacologyItem.setOnClickListener {
-            // Xử lý khi click vào mục Pharmacology
         }
 
         binding.encyclopediaItem.setOnClickListener {
