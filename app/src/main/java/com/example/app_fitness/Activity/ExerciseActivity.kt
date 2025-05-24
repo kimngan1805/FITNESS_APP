@@ -3,6 +3,7 @@ package com.example.app_fitness.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,7 +41,11 @@ class ExerciseActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-
+        val btnReload = findViewById<ImageView>(R.id.refresh_button)
+        btnReload.setOnClickListener {
+            // Reload lại Activity hiện tại
+            recreate()
+        }
         val bottomNavigationView = binding.bottomNavigationView
 
         bottomNavigationView.setOnItemSelectedListener { item ->

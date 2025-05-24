@@ -6,6 +6,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -60,7 +61,15 @@ class WorkoutPlanActivity : AppCompatActivity() {
             override fun onNothingSelected(parentView: AdapterView<*>?) {
                 // Do nothing if nothing is selected
             }
+
         }
+
+        val btnReload = findViewById<ImageView>(R.id.refresh_button)
+        btnReload.setOnClickListener {
+            // Reload lại Activity hiện tại
+            recreate()
+        }
+
 
 // bottom menu (kệ đi)
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
